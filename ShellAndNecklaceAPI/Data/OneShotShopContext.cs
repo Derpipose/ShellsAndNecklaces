@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ShellAndNecklaceAPI.Data;
 
-public partial class DbDallinphelps25Context : DbContext
+public partial class OneShotShopContext : DbContext
 {
-    public DbDallinphelps25Context()
+    public OneShotShopContext()
     {
     }
 
-    public DbDallinphelps25Context(DbContextOptions<DbDallinphelps25Context> options)
+    public OneShotShopContext(DbContextOptions<OneShotShopContext> options)
         : base(options)
     {
     }
