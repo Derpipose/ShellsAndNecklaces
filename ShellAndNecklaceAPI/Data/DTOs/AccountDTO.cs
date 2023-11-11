@@ -1,4 +1,4 @@
-﻿namespace ShellAndNecklaceAPI.Data
+﻿namespace ShellAndNecklaceAPI.Data.DTOs
 {
     public class AccountDTO
     {
