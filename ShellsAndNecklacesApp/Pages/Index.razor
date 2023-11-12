@@ -2,6 +2,57 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<header>
+    <div>
+        Cool Banner with ShotgunShell Heids first presentation slide
+    </div>
+</header>
+<main>
+   <Carousel @bind-SelectedSlide="@selectedSlide">
+    <CarouselSlide Name="1">
+        <Image Source="favicon.png" Text="Lights image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselSlide>
+    <CarouselSlide Name="2">
+        <Image Source="Bracelet.png" Text="Keyboard image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselSlide>
+    <CarouselSlide Name="3">
+        <Image Source="Bracelet.png" Text="Road image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselSlide>
+</Carousel>
+    <section class="home-welcome">
 
-Welcome to your new app.
+        <h3>
+            Welcome to ShotGun Shell Stock Little Utah Store!
+        </h3>
+        <div>
+            Carouself with the best product example images
+        </div>
+    </section>
+
+    <section class="home-about">
+        <h3>
+            Heidi's story
+        </h3>
+        <p>
+            Hi! I am Heidi...
+        </p>
+    </section>
+
+    <section class="home-reviews">
+        <h3>
+            Customer Appreciation
+        </h3>
+        <div class="review">
+            <img>
+            <p>
+                Review 1
+            </p>
+        </div>
+    </section>
+
+</main>
+
+@code
+{
+    public string selectedSlide = "2";
+}
