@@ -1,9 +1,11 @@
+
+
 namespace ShellAndNecklaceUnitTests
 {
-    public class UnitTest1
+    public class UITests
     {
         [Fact]
-        public void Test1()
+        public void AuthorizationCorrectlyValidatesUser()
         {
 
         }
