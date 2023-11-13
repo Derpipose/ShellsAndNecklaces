@@ -1,5 +1,7 @@
 
 
+using ShellsAndNecklacesApp.Pages;
+
 namespace ShellAndNecklaceUnitTests
 {
     public class UITests
@@ -7,6 +9,8 @@ namespace ShellAndNecklaceUnitTests
         [Fact]
         public void AuthorizationCorrectlyValidatesUser()
         {
+            var loginContext = new Login();
+            var cut = RenderComponent<Login>();
 
         }
     }
