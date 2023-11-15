@@ -3,13 +3,27 @@
 <PageTitle>ShellsAndNecklacesApp</PageTitle>
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
+    @*Similar to: https://www.drsquatch.com/*@
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        <div class="top-row px-5 d-flex justify-content-between flex-grow-1 gap-4" >
+            <div class="dropdown-menu-md-start">
+                @*
+                   Tutorial
+                   https://www.youtube.com/watch?v=IhF66IEyv_8&ab_channel=Netcode-Hub
+                   https://blazor.syncfusion.com/documentation/drop-down-menu/getting-started?cs-save-lang=1&cs-lang=csharp
+                *@
+                <SfDropDownButton Content="Edit">
+                    <DropDownMenuItems>
+                        <DropDownMenuItem Text="Cut"></DropDownMenuItem>
+                        <DropDownMenuItem Text="Copy"></DropDownMenuItem>
+                        <DropDownMenuItem Text="Paste"></DropDownMenuItem>
+                    </DropDownMenuItems>
+                </SfDropDownButton>
+            </div>
+            <div class="bg-success">One Shot Stop Logo</div>
+            
+            <div><a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a></div>
         </div>
 
         <article class="content px-4">

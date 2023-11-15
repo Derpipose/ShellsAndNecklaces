@@ -1,7 +1,58 @@
 ﻿@page "/"
+@using Syncfusion.Blazor.Navigations
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<header>
+    <div>
+        Cool Banner with ShotgunShell Heids first presentation slide
+    </div>
+</header>
+<main>
+   <SfCarousel @bind-SelectedSlide="@selectedSlide" >
+        <CarouselItem>
+                <figure class="image-container center">
+                    <img src="favicon.png" alt="Fireworx image" style="height:500px" />
+                </figure>
+        </CarouselItem>
+        <CarouselItem>
+                <figure class="image-container center">
+                <img src="shell-logo.jpg" alt="Shell Logo" style="height:500px" />
+                </figure>
+        </CarouselItem>
+        <CarouselItem>
+                <figure class="image-container center">
+                    <img src="heidi-portfolio.jpg" alt="Bracelet" style="height:500px" />
+                </figure>
+        </CarouselItem>
+        </SfCarousel>
+    <section class="home-welcome">
 
-Welcome to your new app.
+        <h3>
+            Welcome to ShotGun Shell Stock Little Utah Store!
+        </h3>
+        <BestProducts/>
+    </section>
+
+    <section class="home-about">
+        <AboutHeidi/>
+    </section>
+
+    <section class="home-reviews">
+        <h3>
+            Customer Appreciation
+        </h3>
+        <div class="review">
+            <img>
+            <p>
+                Review 1
+            </p>
+        </div>
+    </section>
+
+</main>
+
+@code
+{
+    public string selectedSlide = "2";
+}

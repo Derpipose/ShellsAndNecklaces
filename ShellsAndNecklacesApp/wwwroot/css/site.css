@@ -12,6 +12,28 @@ a, .btn-link {
     color: #0071c1;
 }
 
+/*Custom*/
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.owner-icon {
+    max-height: 40vmax;
+    float: left;
+    margin: 5px;
+}
+
+.business-logo {
+    width: 10%;
+    height: 10%;
+    border-radius: 50%;
+    float: right;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
