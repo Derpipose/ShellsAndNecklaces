@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Syncfusion.Blazor.Navigations
+@inherits LayoutComponentBase
 
 <PageTitle>ShellsAndNecklacesApp</PageTitle>
 
@@ -7,19 +8,25 @@
     @*Similar to: https://www.drsquatch.com/*@
     <main>
         <div class="top-row px-5 d-flex justify-content-between flex-grow-1 gap-4" >
-            <div class="dropdown-menu-md-start">
-                @*
-                   Tutorial
-                   https://www.youtube.com/watch?v=IhF66IEyv_8&ab_channel=Netcode-Hub
-                   https://blazor.syncfusion.com/documentation/drop-down-menu/getting-started?cs-save-lang=1&cs-lang=csharp
-                *@
-                <SfDropDownButton Content="Edit">
-                    <DropDownMenuItems>
-                        <DropDownMenuItem Text="Cut"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Copy"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Paste"></DropDownMenuItem>
-                    </DropDownMenuItems>
-                </SfDropDownButton>
+            <div class="control_wrapper">
+                <SfMenu TValue="MenuItem" HamburgerMode="true" ShowItemOnClick="true">
+                    <MenuItems>
+                        <MenuItem Text="Catalog" Url="/ShopListings"></MenuItem>
+                        <MenuItem Separator="true"></MenuItem>
+                        <MenuItem Text="Reviews" Url="/Reviews"></MenuItem>
+                        <MenuItem Text="Contacts" Url="/ContactUs"></MenuItem>
+                        <MenuItem Text="About Us" Url="/AboutUs"></MenuItem>
+                        <MenuItem></MenuItem>
+                        <MenuItem Text="Tools">
+                            <MenuItems>
+                                <MenuItem Text="Spelling & Grammar"></MenuItem>
+                                <MenuItem Text="Customize"></MenuItem>
+                                <MenuItem Separator="true"></MenuItem>
+                                <MenuItem Text="Options"></MenuItem>
+                            </MenuItems>
+                        </MenuItem>
+                    </MenuItems>
+                </SfMenu>
             </div>
             <div class="bg-success">One Shot Stop Logo</div>
             
@@ -31,3 +38,17 @@
         </article>
     </main>
 </div>
+
+@code {
+    public string ButtonContent = "Menu";
+}
+
+@* I'd rather keep it on this page than lose somewhere in site.css *@
+<style>
+    
+    .e-menu-header {
+        width: 100%;
+        padding-right: 20px;
+        background-color: #7b8cfb;
+    }
+</style>

@@ -16,10 +16,15 @@ a, .btn-link {
 
 .center {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    margin: auto auto;
+    
 }
+
+.carousel {
+    background-color: bisque;
+}
+
+
 
 .owner-icon {
     max-height: 40vmax;

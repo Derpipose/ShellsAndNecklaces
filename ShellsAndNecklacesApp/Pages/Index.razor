@@ -9,10 +9,14 @@
     </div>
 </header>
 <main>
-   <SfCarousel @bind-SelectedSlide="@selectedSlide" >
+    <div style="margin: 0 auto 2em; height: 500px">
+   <SfCarousel @bind-SelectedSlide="@selectedSlide" class="carousel" >
         <CarouselItem>
                 <figure class="image-container center">
                     <img src="favicon.png" alt="Fireworx image" style="height:500px" />
+                </figure>
+                <figure class="image-container center">
+                <img src="shell-logo.jpg" alt="Shell Logo" style="height:500px" />
                 </figure>
         </CarouselItem>
         <CarouselItem>
@@ -26,6 +30,7 @@
                 </figure>
         </CarouselItem>
         </SfCarousel>
+    </div>
     <section class="home-welcome">
 
         <h3>
