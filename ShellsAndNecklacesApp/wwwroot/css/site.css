@@ -14,6 +14,13 @@ a, .btn-link {
 
 /*Custom*/
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 .owner-icon {
     max-height: 40vmax;
     float: left;

@@ -8,6 +8,8 @@ using Blazorise.Icons.FontAwesome;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjgxMzAwMUAzMjMzMmUzMDJlMzBVOHZLME1sZWpxVDRheHphTmozL2J4dm1seEpxVXc3cXh3dmhBRkVpSEFBPQ ==");
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();

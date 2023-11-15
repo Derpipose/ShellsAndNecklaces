@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Syncfusion.Blazor.Navigations
 
 <PageTitle>Index</PageTitle>
 
@@ -8,17 +9,23 @@
     </div>
 </header>
 <main>
-   <Carousel @bind-SelectedSlide="@selectedSlide">
-    <CarouselSlide Name="1">
-        <Image Source="favicon.png" Text="Lights image" Display="Display.Block" Width="Width.Is100" />
-    </CarouselSlide>
-    <CarouselSlide Name="2">
-        <Image Source="Bracelet.png" Text="Keyboard image" Display="Display.Block" Width="Width.Is100" />
-    </CarouselSlide>
-    <CarouselSlide Name="3">
-        <Image Source="Bracelet.png" Text="Road image" Display="Display.Block" Width="Width.Is100" />
-    </CarouselSlide>
-</Carousel>
+   <SfCarousel @bind-SelectedSlide="@selectedSlide" >
+        <CarouselItem>
+                <figure class="image-container center">
+                    <img src="favicon.png" alt="Fireworx image" style="height:500px" />
+                </figure>
+        </CarouselItem>
+        <CarouselItem>
+                <figure class="image-container center">
+                <img src="shell-logo.jpg" alt="Shell Logo" style="height:500px" />
+                </figure>
+        </CarouselItem>
+        <CarouselItem>
+                <figure class="image-container center">
+                    <img src="heidi-portfolio.jpg" alt="Bracelet" style="height:500px" />
+                </figure>
+        </CarouselItem>
+        </SfCarousel>
     <section class="home-welcome">
 
         <h3>
