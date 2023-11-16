@@ -29,7 +29,6 @@ namespace ShellAndNecklaceUnitTests
         [Fact]
         public void ButtonsRedirectCorrectly() {
             var cut = RenderComponent<ShellsAndNecklacesApp.Pages.Index>();
-            cut.Find();
         }
     }
 }
