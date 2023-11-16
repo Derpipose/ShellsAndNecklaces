@@ -5,11 +5,11 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShellsAndNecklacesApp", "ShellsAndNecklacesApp\ShellsAndNecklacesApp.csproj", "{934BCAAE-7136-4484-9FF3-E09C9696A889}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellAndNecklaceAPI", "ShellAndNecklaceAPI\ShellAndNecklaceAPI.csproj", "{821899FD-0A17-4CA8-82A9-341EA6DBD975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShellAndNecklaceAPI", "ShellAndNecklaceAPI\ShellAndNecklaceAPI.csproj", "{821899FD-0A17-4CA8-82A9-341EA6DBD975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellAndNecklaceUnitTests", "ShellAndNecklaceUnitTests\ShellAndNecklaceUnitTests.csproj", "{4CE23B7F-9C40-4885-9015-A59A1ADD8F35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShellAndNecklaceUnitTests", "ShellAndNecklaceUnitTests\ShellAndNecklaceUnitTests.csproj", "{4CE23B7F-9C40-4885-9015-A59A1ADD8F35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShellAndNecklaceIntegrations", "ShellAndNecklaceIntegrations\ShellAndNecklaceIntegrations.csproj", "{05C22E31-DEDB-4A83-9FDD-C27FD0587F23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShellAndNecklaceIntegrations", "ShellAndNecklaceIntegrations\ShellAndNecklaceIntegrations.csproj", "{05C22E31-DEDB-4A83-9FDD-C27FD0587F23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

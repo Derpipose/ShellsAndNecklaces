@@ -1,0 +1,20 @@
+﻿<Carousel @bind-SelectedSlide="@selectedSlide">
+    <button class="bg-transparent"> </button>
+    <CarouselItem Name="1">
+        <Image Source="Bracelet.png" Text="Lights image" Display="Display.Block" Width="Width.Max100" />
+    </CarouselItem>
+    <CarouselItem Name="2">
+        <Image Source="favicon.png" Text="Keyboard image" Display="Display.Block" Width="Width.Max100" />
+    </CarouselItem>
+    <CarouselItem Name="3">
+        <Image Source="fireworks.jpg" Text="Fireworks image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselItem>
+</Carousel>
+@code{
+    private string selectedSlide = "2";
+
+    // public void PrevSlide()
+    // {
+    //     int slide
+    // }
+}

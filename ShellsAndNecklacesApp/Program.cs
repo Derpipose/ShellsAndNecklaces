@@ -1,11 +1,27 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor;
+
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjgxMzAwMUAzMjMzMmUzMDJlMzBVOHZLME1sZWpxVDRheHphTmozL2J4dm1seEpxVXc3cXh3dmhBRkVpSEFBPQ ==");
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSyncfusionBlazor();
+
+builder.Services
+    .AddBlazorise(options =>
+    {
+        options.Immediate = true;
+    })
+    .AddBootstrapProviders()
+    .AddFontAwesomeIcons();
 
 var app = builder.Build();
 
