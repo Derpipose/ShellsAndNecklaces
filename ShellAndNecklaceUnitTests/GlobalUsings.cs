@@ -1,9 +1,10 @@
 global using Xunit;
-using ShellAndNecklaceAPI;
-using ShellAndNecklaceAPI.Data;
-using ShellsAndNecklacesApp;
-using Moq;
-using FluentAssertions;
-using FluentAssertions.Common;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+global using Bunit;
+global using ShellAndNecklaceAPI;
+global using ShellAndNecklaceAPI.Data;
+global using ShellsAndNecklacesApp;
+global using Moq;
+global using FluentAssertions;
+global using FluentAssertions.Common;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
