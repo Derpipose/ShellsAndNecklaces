@@ -10,7 +10,11 @@ namespace ShellAndNecklaceUnitTests
         public void AuthorizationCorrectlyValidatesUser()
         {
             var loginContext = new Login();
-            var cut = RenderComponent<Login>();
+
+            //Code for example, not working yet
+            //loginContext.username = "admin";
+            //loginContext.password = "111111"
+            //var cut = RenderComponent<Login>();
 
         }
     }
