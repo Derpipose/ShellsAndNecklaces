@@ -10,5 +10,6 @@
         public string Address { get; set; } = null!;
 
         public bool? Verified { get; set; }
+        public bool? Closed { get; set; }
     }
 }

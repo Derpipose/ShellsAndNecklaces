@@ -8,6 +8,6 @@ namespace ShellAndNecklaceAPI.Data.DTOs
         public String Description { get; set; }
         public String Status { get; set; }
         public decimal PriceBase { get; set; }
-        public String Picture { get; set; }
+        public String PicString { get; set; }
     }
 }

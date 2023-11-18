@@ -2,9 +2,9 @@
 {
     public interface IService<T>
     {
-        public Task Create(T newentity);
-        public Task Get(string id);
-        public Task<T> Update(T freshentity);
+        public Task<IEnumerable<T>> GetAll();
+        public Task<T> Get(string id);
+        public Task Update(T freshentity);
         public Task Delete(T freshentity);
     }
 }
