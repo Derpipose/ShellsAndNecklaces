@@ -16,7 +16,7 @@ namespace ShellAndNecklaceAPI.Services
 
         public async Task<IEnumerable<PurchaseLineDTO>> GetAll()
         {
-            var 
+            throw new NotImplementedException(); 
         }
 
 
@@ -35,6 +35,6 @@ namespace ShellAndNecklaceAPI.Services
             throw new NotImplementedException();
         }
 
-        public async Task<PurchaseLineDTO>
+        //public async Task<PurchaseLineDTO>
     }
 }
