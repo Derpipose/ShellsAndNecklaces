@@ -22,7 +22,16 @@ a, .btn-link {
 
 .carousel {
     background-color: bisque;
+    height:500px;
 }
+
+.imageHeight{
+    height:500px;
+}
+.left{
+    justify-content:left;
+}
+
 
 
 
