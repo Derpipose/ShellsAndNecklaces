@@ -4,22 +4,26 @@
 
 <header>
     <div>
-        Cool Banner with ShotgunShell Heids first presentation slide
+        Cool Banner with ShotgunShell Heidis first presentation slide
     </div>
 </header>
 <main>
-    <Carousel @bind-SelectedSlide="@selectedSlide">
-    <button class="bg-transparent"> </button>
-    <CarouselItem Name="1">
-        <Image Source="Bracelet.png" Text="Lights image" Display="Display.Block" Width="Width.Max100" />
-    </CarouselItem>
-    <CarouselItem Name="2">
-        <Image Source="favicon.png" Text="Keyboard image" Display="Display.Block" Width="Width.Max100" />
-    </CarouselItem>
-    <CarouselItem Name="3">
-        <Image Source="fireworks.jpg" Text="Fireworks image" Display="Display.Block" Width="Width.Is100" />
-    </CarouselItem>
-</Carousel>
+    <Carousel @bind-SelectedSlide="@selectedSlide" Crossfade="false" justify-content-center>
+        <CarouselSlide Name="1">
+            <Image Source="Bracelet.png" Text="Lights image" Display="Display.Block" class="imageHeight" />
+        </CarouselSlide>
+        <CarouselSlide Name="2">
+            <Image Source="shell-logo.jpg" Text="Keyboard image" Display="Display.Block" class="imageHeight" />
+        </CarouselSlide>
+        <CarouselSlide Name="3">
+            <Image Source="fireworks.jpg" Text="Fireworks image" Display="Display.Block" class="imageHeight" />
+        </CarouselSlide>
+    </Carousel>
+
+
+
+
+
     <section class="home-welcome">
 
         <h3>
@@ -48,5 +52,5 @@
 
 @code
 {
-    public string selectedSlide = "2";
+    public string selectedSlide = "1";
 }
