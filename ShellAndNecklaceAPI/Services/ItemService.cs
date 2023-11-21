@@ -17,17 +17,59 @@ namespace ShellAndNecklaceAPI.Controllers
 
         public async Task<IEnumerable<ItemDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<ItemDTO> items = new List<ItemDTO>();
+                var itemlist = await _context.Items.ToListAsync();
+
+                foreach (Item i in itemlist)
+                {
+                    var piccomponents = from pics in _context.Pictures
+                                    join ftypes in _context.Filetypes on pics.Filetypeid equals ftypes.Id
+                                    where pics.Id == i.Pictureid
+                                    select new
+                                    {
+                                        str = pics.Imagename,
+                                        strfile = ftypes.Fileextension
+                                    };
+                    string picstring = piccomponents.ToString();
+
+                    var statusstring = _context.Statuses.SingleAsync(s => s.Id == i.Statusid).ToString();
+
+                    items.Add(new ItemDTO()
+                    {
+                        Name = i.Itemname,
+                        Description = i.Description,
+                        PriceBase = (decimal)i.Pricebase,
+                        PicString = picstring,
+                        Status = statusstring
+                    });
+                }
+
+                return items;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public async Task<ItemDTO> Get(string id)
         {
             if(id == null)
+            {
+                logger.LogError("No ID provided!");
                 throw new ArgumentNullException("id");
+            }
 
-            int intid = 0;
+            Int32 intid = 0;
             if (!Int32.TryParse(id, out intid))
-                throw new ArgumentException("id is bad");
+            {
+                logger.LogError("ID was not an Integer!");
+                {
+                    throw new ArgumentException($"Failure: ID could not be converted to type {intid.GetType()}.");
+                };
+            }
 
             ItemDTO itemEnt = (ItemDTO)(from i in _context.Items
                           join p in _context.Pictures
@@ -48,7 +90,14 @@ namespace ShellAndNecklaceAPI.Controllers
 
         public async Task Delete(Item itemEntityToDelete)
         {
-            throw new NotImplementedException();
+            try
+            {
+                logger.LogInformation("Attempt to delete Item confirmed, but denied. No such action allowed.");
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType() == typeof(DbUpdateException)) throw new Exception("Failed to delete item!");
+            }
         }
 
         public async Task Update(Item freshEntityToUpdate)
