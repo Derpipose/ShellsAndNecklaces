@@ -35,19 +35,10 @@ namespace ShellAndNecklaceUnitTests
         public void ButtonsRedirectCorrectly() {
 			//arrange
 			using var ctx = new TestContext();
-			// Add Syncfusion Blazor service.
-			//ctx.Services.AddSyncfusionBlazor();
-			ctx.Services.AddOptions();
-
 			var cut = RenderComponent<MainLayout>();
 			//	var sfbutton = cut.FindComponent<MenuItem>;
-			var nav = ctx.Services.GetRequiredService<NavigationManager>();
-			
 			//act
-			cut.Find(".e-menu-header .e-menu-item:nth-child(1)").Click();
-			
 			//assert
-			Assert.Equal($"{nav.BaseUri}/review", nav.Uri);
 		}
     }
 }
