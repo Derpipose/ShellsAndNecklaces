@@ -18,6 +18,10 @@ namespace ShellAndNecklaceAPI.Controllers
 
         public async Task<IEnumerable<AccountDTO>> GetAll()
         {
+            logger.LogInformation("Confirmed; attempt to get all account details recognized.\n" +
+                "Access denied: no such action permitted!");
+            throw new NotImplementedException();
+
             var AccList = _context.Accounts.ToListAsync();
             List<AccountDTO> Acc = new List<AccountDTO>();
 
@@ -66,18 +70,29 @@ namespace ShellAndNecklaceAPI.Controllers
         }
 
         [HttpPost("update")]
-        public async Task Update(Account account)
+        public async Task<AccountDTO> Update(Account account)
         {
-            var updateparcel = await _context.Accounts.SingleAsync(a => a.Id ==  account.Id);
-            var updatedparcel = new AccountDTO
+            logger.LogInformation($"Account detail attempt for account {account.Username} at {DateTime.Now}.");
+            try
             {
-                Username = account.Username,
-                Phone = account.Phone,
-                Email = account.Email,
-                Address = account.Address,
-                Verified = account.Verified,
-            };
-            
+                var updateparcel = await _context.Accounts.SingleAsync(a => a.Id ==  account.Id);
+                var updatedparcel = new AccountDTO
+                {
+                    Username = account.Username,
+                    Phone = account.Phone,
+                    Email = account.Email,
+                    Address = account.Address,
+                    Verified = account.Verified,
+                };
+                _context.Accounts.Update(account);
+                await _context.SaveChangesAsync();
+                return updatedparcel;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Failed to update Account Information!");
+                throw new Exception("Failed to update Account Information!");
+            }   
         }
 
         [HttpDelete("close")]
@@ -85,21 +100,21 @@ namespace ShellAndNecklaceAPI.Controllers
         {
             logger.LogInformation($"Attempt to close account {user} confirmed. Proceeding...");
 
-            var usercontext = await _context.Accounts.SingleAsync(a => (a.Username == user && a.Password == pass));
-            if(usercontext == null)
-            {
-                throw new ArgumentNullException("User not found!");
-            }
-
             try
             {
-                usercontext.Password = pass;
+                var usercontext = await _context.Accounts.SingleAsync(a => (a.Username == user && a.Password == pass));
+                if(usercontext == null)
+                {
+                    throw new ArgumentNullException("User not found!");
+                }
+                
                 await _context.SaveChangesAsync();
                 logger.LogInformation("Success!");
             }
             catch (Exception ex)
             {
-                throw new DbUpdateException(ex.Message, ex);
+                logger.LogError($"{ex.Message}");
+                throw new Exception("Failed to update account!");
             }
         }
     }
