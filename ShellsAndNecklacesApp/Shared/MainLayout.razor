@@ -7,15 +7,15 @@
     @*Similar to: https://www.drsquatch.com/*@
     <main>
 
-        <div class="top-row px-5 d-flex justify-content-between flex-grow-1 gap-4 direction" >
-            <Div name="CompanyName">
-                <div class="bg-success">One Shot Stop Logo</div>
+        <div class="top-row px-5 d-flex justify-content-between flex-grow-1 gap-4 direction topnav" >
+            <Div class="CompanyName">
+                <div class="bg-success"><Image Source="Logo.jpg" class = "business-logo CompanyName"></Image></div>
             </Div>
             <Div name="navbar" class="d-flex">
-                <Div><a href="/index">Home</a></Div>
+                <Div><a href="/" Class="nav-button">Home</a></Div>
                 <Div>
-                    <a href="/store">Shop</a>
-                    <div class="dropdown">
+                    <a href="/store" Class="nav-button">Shop</a>
+                    @*<div class="dropdown">
                         <button name="dropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
                         @onclick="ToggleDrop" aria-haspopup="true" aria-expanded="false">
                             \/
@@ -25,16 +25,16 @@
                             <a class="dropdown-item" href="#">Another action</a>
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
-                    </div>
+                    </div>*@
                 </Div>
                 <Div>
-                    <a href="/about">About</a>
+                    <a href="/about" Class="nav-button">About</a>
                 </Div>
                 <Div>
-                    <a href="/review">Reviews</a>
+                    <a href="/review" Class="nav-button">Reviews</a>
                 </Div>
                 <Div>
-                    <a href="/contact">Contact Us</a>
+                    <a href="/contact" Class="nav-button">Contact Us</a>
                 </Div>
             </Div>
             @* <div class="control_wrapper">
@@ -74,13 +74,3 @@
         droptoggle = droptoggle ? false : true;
     }
 }
-
-@* I'd rather keep it on this page than lose somewhere in site.css *@
-<style>
-    
-    .e-menu-header {
-        width: 100%;
-        padding-right: 20px;
-        background-color: #7b8cfb;
-    }
-</style>
