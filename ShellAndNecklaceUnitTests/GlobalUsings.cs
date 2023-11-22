@@ -8,3 +8,4 @@ global using FluentAssertions;
 global using FluentAssertions.Common;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+global using System.Collections.Generic;

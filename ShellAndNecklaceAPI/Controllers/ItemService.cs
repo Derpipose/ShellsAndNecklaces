@@ -10,9 +10,10 @@ namespace ShellAndNecklaceAPI.Controllers
         private readonly ILogger<ItemService> logger;
         private OneShotShopContext _context;
 
-        public ItemService(ILogger<ItemService> logger)
+        public ItemService(ILogger<ItemService> logger, DbContext newcontext)
         {
             this.logger = logger;
+            _context = (OneShotShopContext)newcontext;
         }
 
         public async Task<IEnumerable<ItemDTO>> GetAll()
