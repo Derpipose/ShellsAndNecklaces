@@ -1,5 +1,9 @@
 ﻿@page "/store"
+@inject IDbContextFactory<DbContext> ContextFactory
+@inject NavigationManager NavManager
+@using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
+@using ShellAndNecklaceAPI.Data
 <h3>Shop</h3>
 
 @*Need style for each status, pagination, automatic making cards*@
@@ -13,9 +17,27 @@
 </div>
 
 @code {
+    [Parameter]
     public string imageSource { get; set; } = "fireworks.jpeg";
     public string path { get; set; } = "/store/item/";
     public string itemName { get; set; }
     public string id { get; set; }
     public string description { get; set; }
+    public int? currentPage { get; set; }
+    protected override async Task OnParametersSetAsync() {
+        try {
+            if (currentPage is null || currentPage < 1)
+            {
+                NavManager.NavigateTo("/store/1");
+                return;
+            }
+            var context = ContextFactory.CreateDbContext();
+            //var itemCount = context.Item.CountAsync();
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine($"Error occured: {e.Message}");
+        }
+    }
+    
 }
