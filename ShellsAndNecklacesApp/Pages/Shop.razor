@@ -1,8 +1,21 @@
-﻿@page "/shop"
+﻿@page "/store"
+@using ShellAndNecklaceAPI
 <h3>Shop</h3>
 
-
+@*Need style for each status, pagination, automatic making cards*@
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="@imageSource" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Description</p>
+        <a href="@(path + id)" class="btn btn-primary">@itemName</a>
+    </div>
+</div>
 
 @code {
-
+    public string imageSource { get; set; } = "fireworks.jpeg";
+    public string path { get; set; } = "/store/item/";
+    public string itemName { get; set; }
+    public string id { get; set; }
+    public string description { get; set; }
 }
