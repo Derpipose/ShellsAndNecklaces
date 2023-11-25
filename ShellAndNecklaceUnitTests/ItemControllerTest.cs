@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ShellAndNecklaceAPI.Controllers;
+using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 using System;
 using System.Collections.Generic;
@@ -132,9 +133,9 @@ namespace ShellAndNecklaceUnitTests
 		public void ItemServiceGetWorks()
 		{
 			//arrange
-			var logmoq = Mock.Of<ILogger<ItemService>>();
-			var dbmoq = Mock.Of<FakeItemController>();
-			//dbmoq.Setup(d => d.Get(It.IsAny<string>())).Returns(new ItemDTO);
+			var logmoq = new Mock<ILogger<ItemService>>();
+			var dbmoq = new Mock<FakeItemController>();
+			dbmoq.Setup(d => d.GetItem(It.IsAny<string>())).Returns(new ItemDTO());
 			List<Item> itemList = new List<Item>();
 			for (int i = 0; i < 10; i++)
 			{
@@ -147,13 +148,30 @@ namespace ShellAndNecklaceUnitTests
 				var status = "AVAILABLE";
 				var picString = "fireworks.jpeg";
 				var priceBase = (decimal)Math.Sqrt(i * 10);
+				itemList.Add(new Item()
+				{
+					Id = i,
+					Itemname = nameVal,
+					Description = description,
+					Pricebase = priceBase
+					//as a list of items it has a few non-matching variables
+					//likely needs definition for "statusId", "picId", etc.
+				});
 			}
 
+			ItemDTO testItem = new ItemDTO()
+			{
+				Name = "A",
+				Description = "AAAAAAAAAAA",
+				Status = "AVAILABLE",
+				PriceBase = (decimal)Math.Sqrt(10),
+				PicString = "fireworks.jpeg"
+			};
 			//act
-			ItemDTO testItem = new ItemDTO();
-
+			dbmoq.GetItem("0");
 
 			//assert
+			
 		}
 	}
 }
