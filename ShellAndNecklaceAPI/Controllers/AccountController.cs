@@ -46,7 +46,7 @@ namespace ShellAndNecklaceAPI.Controllers
         {
             logger.LogInformation("Account details access attempted at " + DateTime.Now);
             var context = await _context.Accounts.SingleAsync(acc => (acc.Username == user));
-            if(context == null)
+            if (context == null)
             {
                 throw new ArgumentNullException("User not found!");
             }
@@ -75,7 +75,7 @@ namespace ShellAndNecklaceAPI.Controllers
             logger.LogInformation($"Account detail attempt for account {account.Username} at {DateTime.Now}.");
             try
             {
-                var updateparcel = await _context.Accounts.SingleAsync(a => a.Id ==  account.Id);
+                var updateparcel = await _context.Accounts.SingleAsync(a => a.Id == account.Id);
                 var updatedparcel = new AccountDTO
                 {
                     Username = account.Username,
@@ -92,7 +92,7 @@ namespace ShellAndNecklaceAPI.Controllers
             {
                 logger.LogError("Failed to update Account Information!");
                 throw new Exception("Failed to update Account Information!");
-            }   
+            }
         }
 
         [HttpDelete("close")]
@@ -103,11 +103,11 @@ namespace ShellAndNecklaceAPI.Controllers
             try
             {
                 var usercontext = await _context.Accounts.SingleAsync(a => (a.Username == user && a.Password == pass));
-                if(usercontext == null)
+                if (usercontext == null)
                 {
                     throw new ArgumentNullException("User not found!");
                 }
-                
+
                 await _context.SaveChangesAsync();
                 logger.LogInformation("Success!");
             }
