@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddDbContextFactory<DbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("YourConnectionString"));
+});
 
 builder.Services
     .AddBlazorise(options =>
