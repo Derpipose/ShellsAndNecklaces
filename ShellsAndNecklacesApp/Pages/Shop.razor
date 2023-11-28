@@ -6,38 +6,111 @@
 @using ShellAndNecklaceAPI.Data
 <h3>Shop</h3>
 
+<ul class="pagination mt-3">
+    <li class="page-item @(currentPage == 1? "disabled" : "")">
+        <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
+    </li>
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        <li class="page-item @(currentPage == i? "active" : "")">
+            <a class="page-link" href="/store/@i">@i</a>
+        </li>
+    }
+    <li class="page-item @(currentPage == totalPages? "disabled" : "")">
+        <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
+    </li>
+</ul>
+
+<select @bind="sortBy">
+    <option value="name">Name</option>
+    <option value="price">Price</option>
+</select>
+
+<select @bind="sortOrder">
+    <option value="asc">Ascending</option>
+    <option value="desc">Descending</option>
+</select>
+
+<button @onclick="HandleSortChangeAsync">Apply Sort</button>
+
 @*Need style for each status, pagination, automatic making cards*@
+@if (itemList != null && itemList.Any())
+{
+    @foreach (var item in itemList)
+    {
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="@imageSource" alt="Card image cap">
+    <img class="card-img-top" src="@item.Picture" alt="picture of @item.Itemname">
     <div class="card-body">
-        <h5 class="card-title">Card title</h5>
+        <h5 class="card-title">@item.Itemname</h5>
         <p class="card-text">Description</p>
-        <a href="@(path + id)" class="btn btn-primary">@itemName</a>
+                <a href="/store/item/@item.Id" class="btn btn-primary">@*item name from data*@</a>
     </div>
 </div>
+    }
+}
+else
+{
+    <p>No items found.</p>
+}
 
 @code {
-    [Parameter]
-    public string imageSource { get; set; } = "fireworks.jpeg";
-    public string path { get; set; } = "/store/item/";
-    public string itemName { get; set; }
-    public string id { get; set; }
-    public string description { get; set; }
+    private List<Item> itemList;
     public int? currentPage { get; set; }
-    protected override async Task OnParametersSetAsync() {
-        try {
-            if (currentPage is null || currentPage < 1)
+    private int totalPages { get; set; }
+    private string sortBy = "name"; // Default sorting by name
+    private string sortOrder = "asc"; // Default sorting order
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchItemsAsync();
+    }
+
+    private async Task FetchItemsAsync()
+    {
+        try{
+            var context = ContextFactory.CreateDbContext();
+            /*IQueryable<Item> query = context.Items.OrderBy(item => item.Name); //sets up the ability to switch the order of items
+            if (sortBy == "name")
+            {
+                query = sortOrder == "asc" ? query.OrderBy(item => item.Name) : query.OrderByDescending(item => item.Name);
+            }
+            else if (sortBy == "price")
+            {
+                query = sortOrder == "asc" ? query.OrderBy(item => item.Price) : query.OrderByDescending(item => item.Price);
+            }
+            if(currentPage is null || currentPage < 1)
             {
                 NavManager.NavigateTo("/store/1");
                 return;
             }
-            var context = ContextFactory.CreateDbContext();
-            //var itemCount = context.Item.CountAsync();
+            var itemCount = context.Item.CountAsync();
+            TotalPages = itemCount == 0
+            ? 1
+            : (int)Math.Ceiling((double)itemCount / itemsPerPage);
+
+            if(currentPage > totalPages)
+            {
+                NavManager.NavigateTo($"/store/{totalPages}");
+                return;
+            }
+            itemList = await context.Items
+            .Skip((currentPage - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .ToListAsync();
+            */
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine($"Error occured: {e.Message}");
+            Console.WriteLine($"Error:{e.Message}");
         }
     }
+
+    protected override async Task OnParametersSetAsync() {
+    }
     
+    private async Task HandleSortChangeAsync()
+    {
+        await FetchItemsAsync(); // Re-fetch items based on the updated sorting criteria
+        StateHasChanged(); // Refresh UI
+    }
 }
