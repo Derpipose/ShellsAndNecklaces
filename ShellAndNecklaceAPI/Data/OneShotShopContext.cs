@@ -178,6 +178,7 @@ public partial class OneShotShopContext : DbContext
             entity.Property(e => e.Reviewbody)
                 .HasMaxLength(256)
                 .HasColumnName("reviewbody");
+            entity.Property(e => e.Reviewdate).HasColumnName("reviewdate");
 
             entity.HasOne(d => d.Account).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.Accountid)

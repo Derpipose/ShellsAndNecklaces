@@ -114,7 +114,7 @@ namespace ShellAndNecklaceUnitTests
 		public void PLServiceGetWorks()
 		{
 			//arrange
-			var logmoq = Mock.Of<ILogger<PurchaseHistoryController>>();
+			var logmoq = Mock.Of<ILogger<PurchaseHistorySerice>>();
 			var dbmoq = Mock.Of<FakePurchaseLineController>();
 			//dbmoq.Setup(d => d.Get(It.IsAny<string>())).Returns(new PurchasedItemDTO);
 			List<Purchaseorder> PLList = new List<Purchaseorder>();

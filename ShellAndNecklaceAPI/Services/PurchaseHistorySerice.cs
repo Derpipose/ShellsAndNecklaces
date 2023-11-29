@@ -5,17 +5,17 @@ using ShellAndNecklaceAPI.Data.DTOs;
 
 namespace ShellAndNecklaceAPI.Services
 {
-    public class PurchaseHistoryController
+    public class PurchaseHistorySerice
     {
-        private readonly ILogger<PurchaseHistoryController> logger;
+        private readonly ILogger<PurchaseHistorySerice> logger;
         private OneShotShopContext _Context;
 
-        public PurchaseHistoryController(ILogger<PurchaseHistoryController> logger)
+        public PurchaseHistorySerice(ILogger<PurchaseHistorySerice> logger)
         {
             this.logger = logger;
         }
 
-        public async Task<List<OrderDTO>> GetAllForUser(Account acc)
+        public async Task<List<OrderDTO>> GetPurchaseHistory(Account acc)
         {
             try
             {
@@ -78,22 +78,9 @@ namespace ShellAndNecklaceAPI.Services
             }
         }
 
-
-        Task<PurchaseHistoryController> Get(string userid)
+        public async Task CreatePurchase()
         {
             throw new NotImplementedException();
         }
-
-        Task Update(PurchaseHistoryController freshentity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task Delete(PurchaseHistoryController freshentity)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public async Task<PurchaseLineDTO>
     }
 }
