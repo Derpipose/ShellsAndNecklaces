@@ -23,7 +23,7 @@ namespace ShellAndNecklaceUnitTests
 			_purchases.AddRange(newlist);
 		}
 
-		public PurchaseLineDTO GetPL(string id)
+		public PurchasedItemDTO GetPL(string id)
 		{
 			int index = 0;
 			if (!Int32.TryParse(id, out index))
@@ -33,7 +33,7 @@ namespace ShellAndNecklaceUnitTests
 
 			foreach (var purchase in _purchases)
 			{
-				if (purchase.Id == index) return new PurchaseLineDTO()
+				if (purchase.Id == index) return new PurchasedItemDTO()
 				{ 
 					
 				};
@@ -42,16 +42,16 @@ namespace ShellAndNecklaceUnitTests
 			throw new ElementNotFoundException("Purchase order not in list");
 		}
 
-		public List<PurchaseLineDTO> GetPLs()
+		public List<PurchasedItemDTO> GetPLs()
 		{
-			List<PurchaseLineDTO> list = new List<PurchaseLineDTO>();
+			List<PurchasedItemDTO> list = new List<PurchasedItemDTO>();
 			foreach (var purchase in _purchases)
 			{
 				switch (purchase.Id % 4)
 				{
 					case 0:
 						{
-							list.Add(new PurchaseLineDTO()
+							list.Add(new PurchasedItemDTO()
 							{
 								//add in more upon completion of the controller
 							});
@@ -59,7 +59,7 @@ namespace ShellAndNecklaceUnitTests
 						break;
 					case 1:
 						{
-							list.Add(new PurchaseLineDTO()
+							list.Add(new PurchasedItemDTO()
 							{
 								
 							});
@@ -67,7 +67,7 @@ namespace ShellAndNecklaceUnitTests
 						break;
 					case 2:
 						{
-							list.Add(new PurchaseLineDTO()
+							list.Add(new PurchasedItemDTO()
 							{
 								
 							});
@@ -75,7 +75,7 @@ namespace ShellAndNecklaceUnitTests
 						break;
 					default:
 						{
-							list.Add(new PurchaseLineDTO()
+							list.Add(new PurchasedItemDTO()
 							{
 								
 							});
@@ -96,11 +96,11 @@ namespace ShellAndNecklaceUnitTests
 			this.logger = logger;
 			PLService = service;
 		}
-		public List<PurchaseLineDTO> GetPLs()
+		public List<PurchasedItemDTO> GetPLs()
 		{
 			return PLService.GetPLs();
 		}
-		public PurchaseLineDTO GetSinglePL(string id)
+		public PurchasedItemDTO GetSinglePL(string id)
 		{
 			return PLService.GetPL(id);
 		}
@@ -114,9 +114,9 @@ namespace ShellAndNecklaceUnitTests
 		public void PLServiceGetWorks()
 		{
 			//arrange
-			var logmoq = Mock.Of<ILogger<PurchaseLineService>>();
+			var logmoq = Mock.Of<ILogger<PurchaseHistorySerice>>();
 			var dbmoq = Mock.Of<FakePurchaseLineController>();
-			//dbmoq.Setup(d => d.Get(It.IsAny<string>())).Returns(new PurchaseLineDTO);
+			//dbmoq.Setup(d => d.Get(It.IsAny<string>())).Returns(new PurchasedItemDTO);
 			List<Purchaseorder> PLList = new List<Purchaseorder>();
 			for (int i = 0; i < 10; i++)
 			{
@@ -124,7 +124,7 @@ namespace ShellAndNecklaceUnitTests
 			}
 
 			//act
-			PurchaseLineDTO testItem = new PurchaseLineDTO();
+			PurchasedItemDTO testItem = new PurchasedItemDTO();
 
 
 			//assert

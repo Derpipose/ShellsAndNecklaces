@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
-using ShellAndNecklaceAPI.Services;
 
 namespace ShellAndNecklaceAPI.Controllers
 {
@@ -26,13 +25,13 @@ namespace ShellAndNecklaceAPI.Controllers
                 foreach (Item i in itemlist)
                 {
                     var piccomponents = from pics in _context.Pictures
-                                    join ftypes in _context.Filetypes on pics.Filetypeid equals ftypes.Id
-                                    where pics.Id == i.Pictureid
-                                    select new
-                                    {
-                                        str = pics.Imagename,
-                                        strfile = ftypes.Fileextension
-                                    };
+                                        join ftypes in _context.Filetypes on pics.Filetypeid equals ftypes.Id
+                                        where pics.Id == i.Pictureid
+                                        select new
+                                        {
+                                            str = pics.Imagename,
+                                            strfile = ftypes.Fileextension
+                                        };
                     string picstring = piccomponents.ToString();
 
                     var statusstring = _context.Statuses.SingleAsync(s => s.Id == i.Statusid).ToString();
@@ -57,7 +56,7 @@ namespace ShellAndNecklaceAPI.Controllers
 
         public async Task<ItemDTO> Get(string id)
         {
-            if(id == null)
+            if (id == null)
             {
                 logger.LogError("No ID provided!");
                 throw new ArgumentNullException("id");
@@ -73,18 +72,18 @@ namespace ShellAndNecklaceAPI.Controllers
             }
 
             ItemDTO itemEnt = (ItemDTO)(from i in _context.Items
-                          join p in _context.Pictures
-                            on i.Pictureid equals p.Id
-                          join f in _context.Filetypes
-                            on p.Filetypeid equals f.Id
-                          select new
-                          {
-                              Name = i.Itemname,
-                              Description = i.Description,
-                              Status = i.Status,
-                              PriceBase = i.Pricebase,
-                              PicString = p.Imagename.Concat(f.Fileextension)
-                          });
+                                        join p in _context.Pictures
+                                          on i.Pictureid equals p.Id
+                                        join f in _context.Filetypes
+                                          on p.Filetypeid equals f.Id
+                                        select new
+                                        {
+                                            Name = i.Itemname,
+                                            Description = i.Description,
+                                            Status = i.Status,
+                                            PriceBase = i.Pricebase,
+                                            PicString = p.Imagename.Concat(f.Fileextension)
+                                        });
 
             return itemEnt;
         }

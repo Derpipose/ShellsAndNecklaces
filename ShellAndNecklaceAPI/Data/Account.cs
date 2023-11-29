@@ -17,6 +17,9 @@ public partial class Account
     public string Address { get; set; } = null!;
 
     public bool? Verified { get; set; }
-    public bool? Closed { get; set; }
+    public bool? Closed {  get; set; }
+
     public virtual ICollection<Purchaseorder> Purchaseorders { get; set; } = new List<Purchaseorder>();
+
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 }

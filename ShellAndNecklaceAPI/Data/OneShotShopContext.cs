@@ -27,10 +27,13 @@ public partial class OneShotShopContext : DbContext
 
     public virtual DbSet<Purchaseorder> Purchaseorders { get; set; }
 
+    public virtual DbSet<Review> Reviews { get; set; }
+
     public virtual DbSet<Status> Statuses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Name=ConnectionStrings:OneShotShop");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=database-1.cisqkskacvfb.us-west-2.rds.amazonaws.com;Port=5432;Username=dallinphelps_25;Database=db_dallinphelps_25;Password=713102526190");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,6 +44,9 @@ public partial class OneShotShopContext : DbContext
             entity.ToTable("account", "OneShotShop");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Password)
+                .HasMaxLength(48)
+                .HasColumnName("password");
             entity.Property(e => e.Address)
                 .HasMaxLength(128)
                 .HasColumnName("address");
@@ -151,10 +157,32 @@ public partial class OneShotShopContext : DbContext
             entity.Property(e => e.Notes)
                 .HasMaxLength(256)
                 .HasColumnName("notes");
+            entity.Property(e => e.Orderdate)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("orderdate");
 
             entity.HasOne(d => d.Account).WithMany(p => p.Purchaseorders)
                 .HasForeignKey(d => d.Accountid)
                 .HasConstraintName("purchaseorder_accountid_fkey");
+        });
+
+        modelBuilder.Entity<Review>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("review_pkey");
+
+            entity.ToTable("review", "OneShotShop");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Accountid).HasColumnName("accountid");
+            entity.Property(e => e.Rating).HasColumnName("rating");
+            entity.Property(e => e.Reviewbody)
+                .HasMaxLength(256)
+                .HasColumnName("reviewbody");
+            entity.Property(e => e.Reviewdate).HasColumnName("reviewdate");
+
+            entity.HasOne(d => d.Account).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.Accountid)
+                .HasConstraintName("review_accountid_fkey");
         });
 
         modelBuilder.Entity<Status>(entity =>

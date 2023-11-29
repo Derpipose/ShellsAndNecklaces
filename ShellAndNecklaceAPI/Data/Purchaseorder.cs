@@ -13,6 +13,8 @@ public partial class Purchaseorder
 
     public string? Notes { get; set; }
 
+    public DateTime? Orderdate { get; set; }
+
     public virtual Account? Account { get; set; }
 
     public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
