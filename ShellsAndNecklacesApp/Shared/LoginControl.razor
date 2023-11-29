@@ -5,6 +5,8 @@
 @if (User.Identity.Name != null) {@*
     <img src="@Avatar" />
     <b>You are logged in as: @GivenName @Surname</b>*@
+    <a href="/account">View Account</a>
+
     <a href="/Identity/Logout">Logout</a>
 } else {
     <a href="/Identity/Login">Login</a>
