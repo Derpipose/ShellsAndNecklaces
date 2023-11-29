@@ -11,6 +11,19 @@ main {
 
 /* custom section*/
 
+.nav-button{
+    padding: 20px 5px 10px 5px;
+}
+
+.CompanyName{
+    padding: 150px 150px 150px 150px;
+}
+
+.topnav{
+    display:flex;
+    align-items:center;
+}
+
 
 
 .sidebar {
@@ -18,9 +31,9 @@ main {
 }
 
 .top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
+    background-color: rgb(251,250,248);
+/*    border-bottom: 1px solid #d6d5d5;
+*/    justify-content: flex-end;
     height: 3.5rem;
     display: flex;
     align-items: center;
