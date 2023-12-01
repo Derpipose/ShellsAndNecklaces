@@ -8,6 +8,9 @@
     display: grid;
     grid-template-columns: repeat(var(--n), 1fr);
     width: calc(220px * var(--n));
+    margin: 0 auto; 
+    padding-top: 50px;
+    padding-bottom:50px;
 }
 
     .gallery > img {
@@ -22,39 +25,48 @@
         .gallery > img:nth-child(1) {
             --delay: calc((1 - 1) / var(--n) * var(--d));
             animation-delay: var(--delay);
-            --r: calc(-20deg + /* random(40) is not a standard CSS function */ 1deg);
+            --r: calc(-10deg + /* random(40) is not a standard CSS function */ 1deg);
+            --k: calc(10deg + 1deg);
         }
 
         .gallery > img:nth-child(2) {
             --delay: calc((1 - 2) / var(--n) * var(--d));
             animation-delay: var(--delay);
-            --r: calc(-20deg + /* random(40) is not a standard CSS function */ 1deg);
+            --r: calc(-10deg + /* random(40) is not a standard CSS function */ 1deg);
+            --k: calc(10deg + 1deg);
         }
 
         .gallery > img:nth-child(3) {
             --delay: calc((1 - 3) / var(--n) * var(--d));
             animation-delay: var(--delay);
-            --r: calc(-20deg + /* random(40) is not a standard CSS function */ 1deg);
+            --r: calc(-10deg + /* random(40) is not a standard CSS function */ 1deg);
+            --k: calc(10deg + 1deg);
         }
 
         .gallery > img:nth-child(4) {
             --delay: calc((1 - 4) / var(--n) * var(--d));
             animation-delay: var(--delay);
-            --r: calc(-20deg + /* random(40) is not a standard CSS function */ 1deg);
+            --r: calc(-10deg + /* random(40) is not a standard CSS function */ 1deg);
+            --k: calc(10deg + 1deg);
         }
 
         .gallery > img:nth-child(5) {
             --delay: calc((1 - 5) / var(--n) * var(--d));
             animation-delay: var(--delay);
-            --r: calc(-20deg + /* random(40) is not a standard CSS function */ 1deg);
+            --r: calc(-10deg + /* random(40) is not a standard CSS function */ 1deg);
+            --k: calc(10deg + 1deg);
         }
 
 @keyframes slide {
-    50% {
-        transform: translateX(120%) rotate(var(--r));
+    25% {
+        transform: translateX(0%) rotate(var(--r));
     }
 
-    0%, 100%, calc(100% / var(--n)) {
+    75% {
+        transform: translateX(0%) rotate(var(--k));
+    }
+
+    0%, 50%, 100%, calc(100% / var(--n)) {
         transform: translateX(0%) rotate(var(--r));
     }
 }
@@ -85,5 +97,4 @@ body {
     display: grid;
     place-content: center;
     background: #cdb380;
-    overflow: hidden;
 }
