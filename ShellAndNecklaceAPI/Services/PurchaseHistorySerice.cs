@@ -10,9 +10,10 @@ namespace ShellAndNecklaceAPI.Services
         private readonly ILogger<PurchaseHistorySerice> logger;
         private OneShotShopContext _Context;
 
-        public PurchaseHistorySerice(ILogger<PurchaseHistorySerice> logger)
+        public PurchaseHistorySerice(ILogger<PurchaseHistorySerice> logger, OneShotShopContext context)
         {
             this.logger = logger;
+            _Context = context;
         }
 
         public async Task<List<OrderDTO>> GetPurchaseHistory(Account acc)
@@ -54,7 +55,7 @@ namespace ShellAndNecklaceAPI.Services
                         if(i.orderid == ph.Id)
                             ordered.Add(new PurchasedItemDTO(){
                                 Name = i.name,
-                                Description = i.desc,
+                                Notes = i.desc,
                                 PictureString = i.picstring,
                                 Quantity = i.quant,
                                 Price = i.price,
@@ -78,9 +79,39 @@ namespace ShellAndNecklaceAPI.Services
             }
         }
 
-        public async Task CreatePurchase()
+        public async Task CreatePurchase(OrderDTO newPurchase)
         {
-            throw new NotImplementedException();
+            decimal ordertotal = 0;
+            foreach(PurchasedItemDTO pitem in newPurchase.Items)
+            {
+                ordertotal += pitem.Price;
+            }
+            var accid = await _Context.Accounts.SingleAsync(a => a.Email == newPurchase.Email);
+
+            var Purchase = new Purchaseorder() { 
+                Email = newPurchase.Email,
+                Orderdate = newPurchase.OrderDate,
+                Notes = newPurchase.Notes,
+                Accountid = accid.Id
+            };
+
+            _Context.Add(Purchase);
+            await _Context.SaveChangesAsync();
+
+            var purchid = _Context.Purchaseorders.MaxBy(po => po.Orderdate).Id;
+
+            foreach(var pitem in newPurchase.Items)
+            {
+                _Context.Add(new Orderitem()
+                {
+                    Orderid = purchid,
+                    Pricepaid = pitem.Price,
+                    Quantity = pitem.Quantity,
+                    Itemid = _Context.Items.SingleAsync(op => op.Itemname == pitem.Name).Id
+                });
+            }
+
+            await _Context.SaveChangesAsync();
         }
     }
 }
