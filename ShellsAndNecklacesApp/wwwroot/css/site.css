@@ -117,3 +117,9 @@ a, .btn-link {
 .bodyContents{
     margin:0% 15% 0% 10%;
 }
+
+.heidi-img {
+    height: 300px;
+    width: auto;
+    margin:auto auto;
+}
