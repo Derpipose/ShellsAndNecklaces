@@ -1,8 +1,83 @@
-﻿<Div>
-    <p>User Name</p>
-    <p>Rating: +++++</p>
-    <Div><img class="review-image" alt="Review Image"/> <p>Review Text</p></Div>
-</Div>
-@code {
+﻿
+<div class="review">
+    <div class="shell-metal">
+        <div class="shell-edge">
 
+        </div>
+        <div class="shell-body">
+
+        </div>
+        <div class="shell-"></div>
+    </div>
+    <div class= "shell-body">
+        <p>User Name</p>
+        <p>Rating: <span>
+            @for(int i = 0; i < FullStars; i++)
+            {
+                <i class="bi bi-star-fill"></i>
+            }
+            @if(HalfStar != 0)
+            {
+                <i class="bi bi-star-half"></i>
+            }
+            </span>
+        </p>
+        <div><img class="review-image" alt="Review Image"/> <p>Review Text</p></div>
+    </div>
+</div>
+@code {
+    public double Rating = 4.5;
+    //0 to 10
+    public int FullStars
+    {
+        get
+        {
+            return (int) Math.Floor(Rating);
+        }
+    }
+    // 0 or 1
+    public int HalfStar
+    {
+        get
+        {
+            if (Rating - (int) Rating != 0) return 1;
+            else return 0;
+        }
+    }
 }
+
+@* explosion: https://speckyboy.com/explosions-in-web-design/ *@
+<style>
+    .review {
+        height:200px;
+        min-width: 450px;
+        max-width: 700px;
+        margin-bottom: 2em;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        overflow: hidden;
+    }
+
+    .reviews :nth-child(odd of .review) {
+        background-color: #d12126;
+        box-shadow: 5px 5px 5px #451112;
+    }
+
+    .reviews :nth-child(even of .review) {
+        background-color: #c968d4;
+        box-shadow: 5px 5px 5px #872596;
+
+    }
+
+    /* from https://codepen.io/chilliconcode/pen/OWxqYR */
+    .shell-metal {
+        aspect-ratio: 1 / 1;
+        height: inherit;
+        background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+        
+    }
+    .shell-metal > .shell-edge {
+
+    }
+</style>
