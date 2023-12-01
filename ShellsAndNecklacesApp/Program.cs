@@ -4,6 +4,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.EntityFrameworkCore;
+using ShellAndNecklaceAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddDbContextFactory<DbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("YourConnectionString"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("OSSContext"));
+});
+
+builder.Services.AddDbContext<OneShotShopContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OSSContext"));
 });
 
 builder.Services
