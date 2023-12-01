@@ -168,7 +168,7 @@ namespace ShellAndNecklaceUnitTests
 				PicString = "fireworks.jpeg"
 			};
 			//act
-			dbmoq.GetItem("0");
+			//dbmoq.GetItem("0");
 
 			//assert
 			

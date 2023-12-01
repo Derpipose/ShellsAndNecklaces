@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddDbContextFactory<DbContext>(options =>
+builder.Services.AddDbContextFactory<OneShotShopContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("OSSContext"));
 });

@@ -20,8 +20,6 @@ namespace ShellAndNecklaceAPI.Controllers
         {
             logger.LogInformation("Confirmed; attempt to get all account details recognized.\n" +
                 "Access denied: no such action permitted!");
-            throw new NotImplementedException();
-
             var AccList = _context.Accounts.ToListAsync();
             List<AccountDTO> Acc = new List<AccountDTO>();
 

@@ -31,7 +31,7 @@ public partial class OneShotShopContext : DbContext
     public virtual DbSet<Status> Statuses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Name=ConnectionStrings:OneShotShop");
+        => optionsBuilder.UseNpgsql("Name=ConnectionStrings:OSSContext");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
