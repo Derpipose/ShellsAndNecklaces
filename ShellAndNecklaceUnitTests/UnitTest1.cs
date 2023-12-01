@@ -24,7 +24,7 @@ namespace ShellAndNecklaceUnitTests
         [Fact]
         public void AuthorizationCorrectlyValidatesUser()
         {
-            var loginContext = new Login();
+            //var loginContext = new Login();
 
             //Code for example, not working yet
             //loginContext.username = "admin";
