@@ -1,5 +1,5 @@
-﻿@page "/store"
-@inject IDbContextFactory<DbContext> ContextFactory
+﻿@page "/store/{currentPage:int}"
+@inject IDbContextFactory<OneShotShopContext> ContextFactory
 @inject NavigationManager NavManager
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
@@ -54,11 +54,14 @@ else
 }
 
 @code {
+    [Parameter]
+    public int currentPage { get; set; } = 0;
+
     private List<Item> itemList;
-    public int? currentPage { get; set; }
     private int totalPages { get; set; }
     private string sortBy = "name"; // Default sorting by name
     private string sortOrder = "asc"; // Default sorting order
+    private int itemsPerPage { get; set; } = 10;
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,29 +70,40 @@ else
 
     private async Task FetchItemsAsync()
     {
-        try{
+        try {
             var context = ContextFactory.CreateDbContext();
-            /*IQueryable<Item> query = context.Items.OrderBy(item => item.Name); //sets up the ability to switch the order of items
+            IQueryable<Item> query = context.Items.OrderBy(item => item.Itemname);
+
             if (sortBy == "name")
             {
-                query = sortOrder == "asc" ? query.OrderBy(item => item.Name) : query.OrderByDescending(item => item.Name);
+                query = sortOrder == "asc" ? query.OrderBy(item => item.Itemname) : query.OrderByDescending(item => item.Itemname);
             }
             else if (sortBy == "price")
             {
-                query = sortOrder == "asc" ? query.OrderBy(item => item.Price) : query.OrderByDescending(item => item.Price);
+                query = sortOrder == "asc" ? query.OrderBy(item => item.Pricebase) : query.OrderByDescending(item => item.Pricebase);
             }
-            if(currentPage is null || currentPage < 1)
+            else
+            {
+                totalPages = 1;
+            }
+            if (currentPage <= 0)
             {
                 NavManager.NavigateTo("/store/1");
                 return;
             }
-            var itemCount = context.Item.CountAsync();
-            TotalPages = itemCount == 0
-            ? 1
-            : (int)Math.Ceiling((double)itemCount / itemsPerPage);
-
-            if(currentPage > totalPages)
+            var itemCount = await context.Items.CountAsync();
+            if ((int)itemCount < 1)
             {
+                totalPages = 1;
+            }
+            else
+            {
+                totalPages = (int)Math.Ceiling((decimal)itemCount / itemsPerPage);
+            }
+
+            if (currentPage > totalPages)
+            {
+                currentPage = totalPages;
                 NavManager.NavigateTo($"/store/{totalPages}");
                 return;
             }
@@ -97,13 +111,13 @@ else
             .Skip((currentPage - 1) * itemsPerPage)
             .Take(itemsPerPage)
             .ToListAsync();
-            */
         }
         catch (Exception e)
         {
             Console.WriteLine($"Error:{e.Message}");
         }
     }
+
 
     protected override async Task OnParametersSetAsync() {
     }
