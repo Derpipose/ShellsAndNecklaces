@@ -1,4 +1,4 @@
-﻿using ShellAndNecklaceAPI.Controllers;
+﻿using ShellAndNecklaceAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;

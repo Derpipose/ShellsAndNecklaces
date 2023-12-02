@@ -6,6 +6,7 @@
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
 @using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI.Services;
 <h3>Shop</h3>
 
 <ul class="pagination mt-3">
@@ -67,14 +68,18 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        ILoggerFactory itemLogger;
+        var context = ContextFactory.CreateDbContext();
+        ItemService itemService = new ItemService(itemLogger, context);
         await FetchItemsAsync();
+        
     }
 
     private async Task FetchItemsAsync()
     {
         try
         {
-            var context = ContextFactory.CreateDbContext();
+            
             if (context.Items != null)
             {
                 IQueryable<Item> query = context.Items.OrderBy(item => item.Itemname);
@@ -98,7 +103,7 @@ else
                 return;
             }
             else { }
-            var itemCount = await context.Items.CountAsync();
+            var itemCount = itemList.Count();
             if (itemCount < 1)
             {
                 totalPages = 1;

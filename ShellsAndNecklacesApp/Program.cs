@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using ShellAndNecklaceAPI.Data;
+using ShellAndNecklaceAPI.Services;
 
 public partial class Program {
     public IConfiguration _configuration { get; }
@@ -30,6 +31,10 @@ public partial class Program {
         {
             options.UseSqlServer(builder.Configuration.GetConnectionString("OneShotShop"));
         });
+        /*builder.Services.AddDbContext<OneShotShopContext>(options =>
+        {
+            options.UseSqlServer(builder.Configuration.GetConnectionString("OneShotShop"));
+        });*/
         builder.Services
             .AddBlazorise(options => {
                 options.Immediate = true;

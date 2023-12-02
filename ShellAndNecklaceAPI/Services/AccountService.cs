@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 
-namespace ShellAndNecklaceAPI.Controllers
+namespace ShellAndNecklaceAPI.Services
 {
     public class AccountService
     {
