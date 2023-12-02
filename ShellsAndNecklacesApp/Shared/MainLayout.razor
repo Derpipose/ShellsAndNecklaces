@@ -6,28 +6,28 @@
 
     <main>
 
-        <div class="top-row px-5 d-flex justify-content-between flex-grow-1 gap-4 direction topnav" >
+        <div class="top-row px-5 d-flex justify-content-between flex-grow-1 gap-4 direction topnav">
             <Div class="CompanyName">
-                <div class="bg-success"><Image Source="Logo.jpg" class = "business-logo CompanyName"></Image></div>
+                <div class="bg-success"><Image Source="Logo.jpg" class="business-logo CompanyName"></Image></div>
             </Div>
             <Div name="navbar" class="d-flex">
                 <Div><a href="/" Class="nav-button">Home</a></Div>
                 <Div>
                     <a href="/store/1" Class="nav-button">Shop</a>
                     @*<div class="dropdown">
-                        <button name="dropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
-                        @onclick="ToggleDrop" aria-haspopup="true" aria-expanded="false">
-                            \/
-                        </button>   
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#"></a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                    <button name="dropdown" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    @onclick="ToggleDrop" aria-haspopup="true" aria-expanded="false">
+                    \/
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#"></a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
                     </div>*@
                 </Div>
                 @*<Div>
-                    <a href="/about" Class="nav-button">About</a>
+                <a href="/about" Class="nav-button">About</a>
                 </Div>*@
                 <Div>
                     <a href="/review" Class="nav-button">Reviews</a>
@@ -39,11 +39,11 @@
                     <LoginControl />
                 </Div>
             </Div>
-            
-           
+
+
         </div>
 
-        <article class="content px-4 bodyContents">
+        <article class="content px-4 PageBackground ">
             @Body
         </article>
     </main>
@@ -53,8 +53,7 @@
     private bool droptoggle = false;
 
     public string ButtonContent = "Menu";
-    public void ToggleDrop()
-    {
+    public void ToggleDrop() {
         droptoggle = droptoggle ? false : true;
     }
 }
