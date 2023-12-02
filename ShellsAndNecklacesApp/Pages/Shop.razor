@@ -97,6 +97,7 @@ else
                 NavManager.NavigateTo("/store/1");
                 return;
             }
+            else { }
             var itemCount = await context.Items.CountAsync();
             if (itemCount < 1)
             {
@@ -113,6 +114,7 @@ else
                 NavManager.NavigateTo($"/store/{totalPages}");
                 return;
             }
+            else { }
             itemList = await context.Items
             .Skip((currentPage - 1) * itemsPerPage)
             .Take(itemsPerPage)
