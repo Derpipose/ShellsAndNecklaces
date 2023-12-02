@@ -35,11 +35,6 @@ a, .btn-link {
 
 
 
-.owner-icon {
-    max-height: 40vmax;
-    float: left;
-    margin: 5px;
-}
 
 .business-logo {
     width: 200px;
@@ -110,12 +105,27 @@ a, .btn-link {
 }
 
 
+.owner-icon {
+    float: left;
+    margin: 5px;
+}
+
+.aboutpage
+{
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+
+
+
 .topnavContents {
     /*margin:10%*/
 }
 
-.PageBackground {
-    background: rgba(126,80,70,.75);
+main {
+    background: rgba(156,120,110,1);
 }
 
 .bodyContents {
@@ -123,7 +133,12 @@ a, .btn-link {
 }
 
 .heidi-img {
-    height: 300px;
-    width: auto;
-    margin: auto auto;
+    width: 250px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    margin:0px 0px 25px 0px;
+}
+ 
+.topPadding{
+    margin: 10px, 5px, 10px, 5px;
 }
