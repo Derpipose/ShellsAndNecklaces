@@ -114,6 +114,10 @@ a, .btn-link {
     /*margin:10%*/
 }
 
+.PageBackground {
+    background: rgba(126,80,70,.75);
+}
+
 .bodyContents{
     margin:0% 15% 0% 10%;
 }
