@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.Extensions.Logging;
-using ShellAndNecklaceAPI.Controllers;
+using ShellAndNecklaceAPI.Services;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 using ShellsAndNecklacesApp.Pages;
