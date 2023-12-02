@@ -22,4 +22,5 @@ public partial class Account
     public virtual ICollection<Purchaseorder> Purchaseorders { get; set; } = new List<Purchaseorder>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public virtual ICollection<ItemReview> ItemReviews { get; set; } = new List<ItemReview>();
 }

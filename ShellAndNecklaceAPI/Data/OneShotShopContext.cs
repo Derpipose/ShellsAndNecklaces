@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ShellAndNecklaceAPI.Data.DTOs;
 
 namespace ShellAndNecklaceAPI.Data;
 
@@ -28,6 +29,7 @@ public partial class OneShotShopContext : DbContext
     public virtual DbSet<Purchaseorder> Purchaseorders { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
+    public virtual DbSet<ItemReview> ItemReviews { get; set; }
 
     public virtual DbSet<Status> Statuses { get; set; }
 
@@ -101,6 +103,25 @@ public partial class OneShotShopContext : DbContext
             entity.HasOne(d => d.Status).WithMany(p => p.Items)
                 .HasForeignKey(d => d.Statusid)
                 .HasConstraintName("item_statusid_fkey");
+        });
+        modelBuilder.Entity<ItemReview>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("itemreview_pkey");
+            entity.ToTable("itemreview", "OneShotShop");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Itemid).HasColumnName("itemid");
+            entity.Property(e => e.Accountid).HasColumnName("accountid");
+            entity.Property(e => e.Reviewdate).HasColumnName("reviewdate");
+            entity.Property(e => e.Reviewtext).HasColumnName("reviewtext");
+            entity.Property(e => e.Rating).HasColumnName("rating");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.ItemReviews)
+                .HasForeignKey(d => d.Itemid)
+                .HasConstraintName("itemreview_itemid_fkey");
+            entity.HasOne(d => d.Account).WithMany(p => p.ItemReviews)
+                .HasForeignKey(d => d.Accountid)
+                .HasConstraintName("itemreview_accountid_fkey");
         });
 
         modelBuilder.Entity<Orderitem>(entity =>
@@ -176,7 +197,6 @@ public partial class OneShotShopContext : DbContext
             entity.Property(e => e.Accountid).HasColumnName("accountid");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.Reviewbody)
-                .HasMaxLength(256)
                 .HasColumnName("reviewbody");
             entity.Property(e => e.Reviewdate).HasColumnName("reviewdate");
 
