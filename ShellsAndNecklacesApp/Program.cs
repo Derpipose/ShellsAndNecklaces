@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net.Http;
 using Microsoft.Extensions.Configuration;
-
+using ShellAndNecklaceAPI.Data;
 
 public partial class Program {
     public IConfiguration _configuration { get; }
@@ -26,9 +26,9 @@ public partial class Program {
         // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
-        builder.Services.AddDbContextFactory<DbContext>(options =>
+        builder.Services.AddDbContextFactory<OneShotShopContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("ShellDB:ConnectionString"));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("OneShotShop"));
         });
         builder.Services
             .AddBlazorise(options => {
