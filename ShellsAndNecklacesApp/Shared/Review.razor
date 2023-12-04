@@ -1,8 +1,182 @@
-﻿<Div>
-    <p>User Name</p>
-    <p>Rating: +++++</p>
-    <Div><img class="review-image" alt="Review Image"/> <p>Review Text</p></Div>
-</Div>
-@code {
+﻿
+<div class="review-wrap">
+    <div class="review" @onclick="RedirectPage">
+        <div class="shell-metal">
+            <div class="shell-outer-edge"></div>
+             <div class="shell-image-container">
+                <img class="shell-image" src="1220WinchesterBlue.jpg" alt="Review Image" />
+            </div> 
+            @* <div class="shell-inner-edge"></div> *@
+        </div>
+        <div class= "shell-body">
+            <p class="review-rating">Rating: <span>
+                @for(int i = 0; i < FullStars; i++)
+                {
+                    <i class="bi bi-star-fill"></i>
+                }
+                @if(HalfStar != 0)
+                {
+                    <i class="bi bi-star-half"></i>
+                }
+                </span>
+            </p>
+            <p class="review-text">@ShortenedReviewText</p>
+            <p class="review-user">@UserName</p>
+        </div>
+    </div>
+    <Popup @ref="popupRef" />
+</div>
 
+
+
+
+@code {
+    public double Rating = 4.5;
+    //0 to 10
+    public int FullStars
+    {
+        get
+        {
+            return (int) Math.Floor(Rating);
+        }
+    }
+    // 0 or 1
+    public int HalfStar
+    {
+        get
+        {
+            if (Rating - (int) Rating != 0) return 1;
+            else return 0;
+        }
+    }
+
+    private string UserName = "Random User Name";
+    public string HeaderUserName
+    {
+        get
+        {
+            return "Review from " + UserName;
+        }
+    }
+
+    private string FullReviewText = @"I can't speak highly enough of [Clinic's name] and [Doctor's name]. The entire experience, from the moment I walked in, was fantastic. The staff was friendly and efficient, and [Doctor's name] was not only knowledgeable but also took the time to address all my questions and concerns. I left the clinic feeling confident in the care I received. If you're looking for a reputable clinic with a compassionate doctor, look no further than [Clinic's name].";
+
+    public string ShortenedReviewText
+    {
+        get
+        {
+            if (FullReviewText is null) return "";
+
+            string[] words = FullReviewText.Split(" ");
+
+            if (words.Length <= 10) return string.Join(" ", words!);
+            else return string.Join(" ", words.Take(10)!) + "...";
+        }
+    }
+    private Popup popupRef;
+
+    private void RedirectPage()
+    {
+        // Shows the popup at the center of the screen
+        popupRef.Show(FullReviewText, HeaderUserName);
+    }
 }
+
+@* explosion: https://speckyboy.com/explosions-in-web-design/ *@
+<style>
+    .review-wrap{
+        display:flex;
+        margin-bottom: 3em;
+    }
+    .review {
+        height:250px;
+        min-width: 450px;
+        max-width: 800px;
+        margin-bottom: 2em;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        font-size: large;
+    }
+
+    .review:hover {
+        box-shadow:5px 5px 50px red;
+        cursor: pointer;
+    }
+
+    .reviews :nth-child(odd of .review-wrap) .review{
+        background-color: #d12126;
+    }
+
+    .reviews :nth-child(odd of .review-wrap):not(:hover) .review{
+        box-shadow: 5px 5px 5px #451112;
+    }
+
+    .reviews :nth-child(even of .review-wrap) .review{
+        background-color: #c968d4;
+    }
+
+    .reviews :nth-child(even of .review-wrap):not(:hover) .review{
+        box-shadow: 5px 5px 5px #872596;
+    }
+
+    /* from https://codepen.io/chilliconcode/pen/OWxqYR */
+    .shell-metal {
+        display:flex;
+        aspect-ratio: 1 / 1;
+        height: inherit;
+        border-radius: 10px 0 0 10px;
+        background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+    }
+    .shell-outer-edge {
+        position: relative;
+        width: 10%;
+        height: 110%;
+        background: inherit;
+        left: -10%;
+        top: -5%;
+        border: 1px solid black;
+    }
+    .shell-image-container {
+        height: inherit;
+        overflow: hidden;
+        aspect-ratio: 1/1;
+        position: absolute;
+        border-radius: 50%;
+    }
+/*     .shell-image-container::after {
+        content: "";
+        display:block;
+        padding-bottom: 100%;
+    } */
+    .shell-image {
+        position:absolute;
+        height: inherit;
+        /* object-fit: cover; */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .shell-body {
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .review-rating {
+        order: 1
+    }
+    .review-rating span {
+        color: gold;
+    }
+
+    .review-text {
+        order: 2;
+    }
+    .review-user {
+        order: 3;
+    }
+
+    
+</style>

@@ -1,13 +1,16 @@
-﻿﻿
+﻿@page "/store"
 @page "/store/{currentPage:int}"
 
 @inject IDbContextFactory<OneShotShopContext> ContextFactory
 @inject NavigationManager NavManager
+@inject ILogger<ItemService> itemLogger
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
 @using ShellAndNecklaceAPI.Data
 
+
 <PageTitle>Shop</PageTitle>
+
 <h3>Shop</h3>
 
 <ul class="pagination mt-3">
@@ -67,16 +70,21 @@ else
     private string sortOrder = "asc"; // Default sorting order
     private int itemsPerPage { get; set; } = 10;
 
+
     protected override async Task OnInitializedAsync()
     {
+        
+        var context = ContextFactory.CreateDbContext();
+        ItemService itemService = new ItemService(itemLogger, context);
         await FetchItemsAsync();
+        
     }
 
     private async Task FetchItemsAsync()
     {
-        try
-        {
+        try {
             var context = ContextFactory.CreateDbContext();
+            
             if (context.Items != null)
             {
                 IQueryable<Item> query = context.Items.OrderBy(item => item.Itemname);
@@ -99,8 +107,9 @@ else
                 NavManager.NavigateTo("/store/1");
                 return;
             }
-            var itemCount = await context.Items.CountAsync();
-            if ((int)itemCount < 1)
+            else { }
+            var itemCount = itemList.Count();
+            if (itemCount < 1)
             {
                 totalPages = 1;
             }
@@ -115,6 +124,7 @@ else
                 NavManager.NavigateTo($"/store/{totalPages}");
                 return;
             }
+            else { }
             itemList = await context.Items
             .Skip((currentPage - 1) * itemsPerPage)
             .Take(itemsPerPage)

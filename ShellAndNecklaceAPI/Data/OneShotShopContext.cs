@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using ShellAndNecklaceAPI.Data.DTOs;
 
 namespace ShellAndNecklaceAPI.Data;
 
@@ -28,14 +29,14 @@ public partial class OneShotShopContext : DbContext
     public virtual DbSet<Purchaseorder> Purchaseorders { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
+    public virtual DbSet<ItemReview> ItemReviews { get; set; }
 
     public virtual DbSet<Status> Statuses { get; set; }
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //  => optionsBuilder.UseNpgsql("OneShotShop");
+      //=> optionsBuilder.UseNpgsql("OneShotShop");
    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-      //=> optionsBuilder.UseNpgsql("Host=database-1.cisqkskacvfb.us-west-2.rds.amazonaws.com;Port=5432;Username=dallinphelps_25;Database=db_dallinphelps_25;Password=713102526190");
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -104,6 +105,25 @@ public partial class OneShotShopContext : DbContext
             entity.HasOne(d => d.Status).WithMany(p => p.Items)
                 .HasForeignKey(d => d.Statusid)
                 .HasConstraintName("item_statusid_fkey");
+        });
+        modelBuilder.Entity<ItemReview>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("itemreview_pkey");
+            entity.ToTable("itemreview", "OneShotShop");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Itemid).HasColumnName("itemid");
+            entity.Property(e => e.Accountid).HasColumnName("accountid");
+            entity.Property(e => e.Reviewdate).HasColumnName("reviewdate");
+            entity.Property(e => e.Reviewtext).HasColumnName("reviewtext");
+            entity.Property(e => e.Rating).HasColumnName("rating");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.ItemReviews)
+                .HasForeignKey(d => d.Itemid)
+                .HasConstraintName("itemreview_itemid_fkey");
+            entity.HasOne(d => d.Account).WithMany(p => p.ItemReviews)
+                .HasForeignKey(d => d.Accountid)
+                .HasConstraintName("itemreview_accountid_fkey");
         });
 
         modelBuilder.Entity<Orderitem>(entity =>
@@ -179,7 +199,6 @@ public partial class OneShotShopContext : DbContext
             entity.Property(e => e.Accountid).HasColumnName("accountid");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.Reviewbody)
-                .HasMaxLength(256)
                 .HasColumnName("reviewbody");
             entity.Property(e => e.Reviewdate).HasColumnName("reviewdate");
 

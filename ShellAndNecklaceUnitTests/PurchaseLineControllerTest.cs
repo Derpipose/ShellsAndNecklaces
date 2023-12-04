@@ -1,6 +1,6 @@
 ﻿using Blazorise;
 using Microsoft.Extensions.Logging;
-using ShellAndNecklaceAPI.Controllers;
+using ShellAndNecklaceAPI.Services;
 using ShellAndNecklaceAPI.Data.DTOs;
 using ShellAndNecklaceAPI.Services;
 using System;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using ShellAndNecklaceAPI.Controllers;
+using ShellAndNecklaceAPI.Services;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 using System;
@@ -123,8 +123,6 @@ namespace ShellAndNecklaceUnitTests
 		{
 			return itemService.GetItem(id);
 		}
-
-
 	}
 
 	public class ItemServiceTests : BlazorUnitTestContext

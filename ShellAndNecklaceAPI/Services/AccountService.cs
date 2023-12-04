@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 
-namespace ShellAndNecklaceAPI.Controllers
+namespace ShellAndNecklaceAPI.Services
 {
     public class AccountService
     {
@@ -41,7 +41,6 @@ namespace ShellAndNecklaceAPI.Controllers
             return Acc;
         }
 
-        [HttpGet("account")]
         public async Task<AccountDTO> Get(string user)
         {
             logger.LogInformation("Account details access attempted at " + DateTime.Now);
@@ -49,6 +48,11 @@ namespace ShellAndNecklaceAPI.Controllers
             if (context == null)
             {
                 throw new ArgumentNullException("User not found!");
+            }
+
+            if((bool)context.Closed)
+            {
+                throw new UnauthorizedAccessException("Account is closed!");
             }
 
             logger.LogInformation("\nAccount " + context.Username + " accessed.");
@@ -69,13 +73,16 @@ namespace ShellAndNecklaceAPI.Controllers
             };
         }
 
-        [HttpPost("update")]
         public async Task<AccountDTO> Update(Account account)
         {
             logger.LogInformation($"Account detail attempt for account {account.Username} at {DateTime.Now}.");
             try
             {
                 var updateparcel = await _context.Accounts.SingleAsync(a => a.Id == account.Id);
+
+                if ((bool)updateparcel.Closed || updateparcel == null)
+                    throw new Exception();
+                
                 var updatedparcel = new AccountDTO
                 {
                     Username = account.Username,
@@ -95,7 +102,6 @@ namespace ShellAndNecklaceAPI.Controllers
             }
         }
 
-        [HttpDelete("close")]
         public async Task Delete(string user, string pass)
         {
             logger.LogInformation($"Attempt to close account {user} confirmed. Proceeding...");

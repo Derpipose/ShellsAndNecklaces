@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using ShellAndNecklaceAPI.Controllers;
+using ShellAndNecklaceAPI.Services;
 using ShellAndNecklaceAPI.Data.DTOs;
 using System;
 using System.Collections.Generic;

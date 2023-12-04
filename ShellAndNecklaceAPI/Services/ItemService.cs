@@ -2,7 +2,7 @@
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 
-namespace ShellAndNecklaceAPI.Controllers
+namespace ShellAndNecklaceAPI.Services
 {
     public class ItemService
     {
@@ -35,7 +35,7 @@ namespace ShellAndNecklaceAPI.Controllers
                     string picstring = piccomponents.ToString();
 
                     var statusstring = _context.Statuses.SingleAsync(s => s.Id == i.Statusid).ToString();
-
+                    
                     items.Add(new ItemDTO()
                     {
                         Name = i.Itemname,

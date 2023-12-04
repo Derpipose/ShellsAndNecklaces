@@ -18,6 +18,7 @@ public partial class Item
     public int? Statusid { get; set; }
 
     public virtual ICollection<Orderitem> Orderitems { get; set; } = new List<Orderitem>();
+    public virtual ICollection<ItemReview> ItemReviews { get; set; } = new List<ItemReview>();
 
     public virtual Picture? Picture { get; set; }
 
