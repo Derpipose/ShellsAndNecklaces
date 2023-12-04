@@ -3,6 +3,7 @@
 
 @inject IDbContextFactory<OneShotShopContext> ContextFactory
 @inject NavigationManager NavManager
+@inject ILogger<ItemService> itemLogger
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
 @using ShellAndNecklaceAPI.Data
@@ -68,9 +69,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        ILoggerFactory itemLogger;
         var context = ContextFactory.CreateDbContext();
         ItemService itemService = new ItemService(itemLogger, context);
+        itemList = itemService.GetAll();
         await FetchItemsAsync();
         
     }
