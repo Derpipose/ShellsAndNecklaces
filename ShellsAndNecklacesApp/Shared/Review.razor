@@ -3,10 +3,10 @@
     <div class="review" @onclick="RedirectPage">
         <div class="shell-metal">
             <div class="shell-outer-edge"></div>
-            <div class="shell-image">
-                <img src="1220WinchesterBlue.jpg" alt="Review Image" />
-            </div>
-            <div class="shell-inner-edge"></div>
+             <div class="shell-image-container">
+                <img class="shell-image" src="1220WinchesterBlue.jpg" alt="Review Image" />
+            </div> 
+            @* <div class="shell-inner-edge"></div> *@
         </div>
         <div class= "shell-body">
             <p class="review-rating">Rating: <span>
@@ -86,6 +86,7 @@
 <style>
     .review-wrap{
         display:flex;
+        margin-bottom: 3em;
     }
     .review {
         height:250px;
@@ -103,26 +104,28 @@
         cursor: pointer;
     }
 
-    .reviews :nth-child(odd of .review) {
+    .reviews :nth-child(odd of .review-wrap) .review{
         background-color: #d12126;
     }
 
-    .reviews :nth-child(odd of .review):not(:hover) {
+    .reviews :nth-child(odd of .review-wrap):not(:hover) .review{
         box-shadow: 5px 5px 5px #451112;
     }
 
-    .reviews :nth-child(even of .review){
+    .reviews :nth-child(even of .review-wrap) .review{
         background-color: #c968d4;
     }
 
-    .reviews :nth-child(even of .review):not(:hover) {
+    .reviews :nth-child(even of .review-wrap):not(:hover) .review{
         box-shadow: 5px 5px 5px #872596;
     }
 
     /* from https://codepen.io/chilliconcode/pen/OWxqYR */
     .shell-metal {
+        display:flex;
         aspect-ratio: 1 / 1;
-        height: 100%;
+        height: inherit;
+        border-radius: 10px 0 0 10px;
         background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
     }
     .shell-outer-edge {
@@ -134,14 +137,25 @@
         top: -5%;
         border: 1px solid black;
     }
-    .shell-image {
-        position: relative;
-        top: 6%;
+    .shell-image-container {
         height: inherit;
         overflow: hidden;
+        aspect-ratio: 1/1;
+        position: absolute;
+        border-radius: 50%;
     }
-    .shell-image img {
-        height: 10%;
+/*     .shell-image-container::after {
+        content: "";
+        display:block;
+        padding-bottom: 100%;
+    } */
+    .shell-image {
+        position:absolute;
+        height: inherit;
+        /* object-fit: cover; */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     .shell-body {
         padding-left: 10px;
