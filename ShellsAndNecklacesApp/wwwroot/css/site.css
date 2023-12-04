@@ -166,6 +166,14 @@ main {
     min-height:max-content;
 }
 
-.clear{
-    clear:both;
+.clear {
+    clear: both;
+}
+
+.topnav {
+    position: fixed;
+    top: 0; /* Adjust the distance from the top as needed */
+    left:0;
+    background-color: rgba(156, 120, 110, 1);
+    z-index: 100; /* Adjust the z-index as needed */
 }
