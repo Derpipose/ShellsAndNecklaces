@@ -3,6 +3,7 @@
 
 @inject IDbContextFactory<OneShotShopContext> ContextFactory
 @inject NavigationManager NavManager
+@inject ILogger<ItemService> itemLogger
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
 @using ShellAndNecklaceAPI.Data
@@ -66,9 +67,10 @@ else
     private string sortOrder = "asc"; // Default sorting order
     private int itemsPerPage { get; set; } = 10;
 
+
     protected override async Task OnInitializedAsync()
     {
-        ILoggerFactory itemLogger;
+        
         var context = ContextFactory.CreateDbContext();
         ItemService itemService = new ItemService(itemLogger, context);
         await FetchItemsAsync();
@@ -77,8 +79,8 @@ else
 
     private async Task FetchItemsAsync()
     {
-        try
-        {
+        try {
+            var context = ContextFactory.CreateDbContext();
             
             if (context.Items != null)
             {
