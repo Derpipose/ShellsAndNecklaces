@@ -35,7 +35,7 @@ namespace ShellAndNecklaceAPI.Services
                     string picstring = piccomponents.ToString();
 
                     var statusstring = _context.Statuses.SingleAsync(s => s.Id == i.Statusid).ToString();
-
+                    
                     items.Add(new ItemDTO()
                     {
                         Name = i.Itemname,

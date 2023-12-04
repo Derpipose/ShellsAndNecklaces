@@ -123,8 +123,6 @@ namespace ShellAndNecklaceUnitTests
 		{
 			return itemService.GetItem(id);
 		}
-
-
 	}
 
 	public class ItemServiceTests : BlazorUnitTestContext
