@@ -22,10 +22,10 @@ namespace ShellAndNecklaceAPI.Services
                 "Access denied: no such action permitted!");
             //throw new NotImplementedException();
 
-            var AccList = _context.Accounts.ToListAsync();
+            var AccList = await _context.Accounts.ToListAsync();
             List<AccountDTO> Acc = new List<AccountDTO>();
 
-            foreach (var account in Acc)
+            foreach (var account in AccList)
             {
                 Acc.Add(new AccountDTO
                 {
@@ -44,7 +44,7 @@ namespace ShellAndNecklaceAPI.Services
         public async Task<AccountDTO> Get(string user)
         {
             logger.LogInformation("Account details access attempted at " + DateTime.Now);
-            var context = await _context.Accounts.SingleAsync(acc => (acc.Username == user));
+            var context = await _context.Accounts.SingleAsync(acc => (acc.Email == user));
             if (context == null)
             {
                 throw new ArgumentNullException("User not found!");
@@ -102,13 +102,13 @@ namespace ShellAndNecklaceAPI.Services
             }
         }
 
-        public async Task Delete(string user, string pass)
+        public async Task Delete(string user)
         {
             logger.LogInformation($"Attempt to close account {user} confirmed. Proceeding...");
 
             try
             {
-                var usercontext = await _context.Accounts.SingleAsync(a => (a.Username == user && a.Password == pass));
+                var usercontext = await _context.Accounts.SingleAsync(a => a.Email == user);
                 if (usercontext == null)
                 {
                     throw new ArgumentNullException("User not found!");
