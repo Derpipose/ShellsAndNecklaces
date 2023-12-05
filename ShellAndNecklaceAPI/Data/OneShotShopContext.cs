@@ -48,9 +48,6 @@ public partial class OneShotShopContext : DbContext
             entity.ToTable("account", "OneShotShop");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Password)
-                .HasMaxLength(48)
-                .HasColumnName("password");
             entity.Property(e => e.Address)
                 .HasMaxLength(128)
                 .HasColumnName("address");

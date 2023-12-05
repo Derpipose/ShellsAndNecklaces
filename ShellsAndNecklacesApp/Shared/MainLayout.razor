@@ -43,8 +43,13 @@
 
 
         </div>
+        @if (true)
+        {
+            <Button class="cart-button" @onclick=ToCart>
+                <Icon Name="IconName.ShoppingCart" ></Icon>
+            </Button>
+        }
 
-        
         <article class="content px-4 PageBackground ">
             @Body
         </article>
@@ -58,5 +63,10 @@
     public string ButtonContent = "Menu";
     public void ToggleDrop() {
         droptoggle = droptoggle ? false : true;
+    }
+
+    public void ToCart()
+    {
+        
     }
 }
