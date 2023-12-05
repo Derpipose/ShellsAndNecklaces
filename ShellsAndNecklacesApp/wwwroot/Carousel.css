@@ -6,21 +6,64 @@
     --d: 10s; /* duration */
 
     display: grid;
-    grid-template-columns: repeat(var(--n), 1fr);
-    width: calc(220px * var(--n));
+    grid-template-columns: repeat(3, 1fr);
+    width: 100px;
     margin: 0 auto;
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
-    .gallery > img {
-        width: 100%;
-        aspect-ratio: 1;
-        object-fit: cover;
-        border: 10px solid #f2f2f2;
-        box-shadow: 0 0 4px #0007;
-        animation: slide var(--d) infinite, z-order var(--d) infinite steps(1);
+@media (min-width: 600px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        width:calc(250px * 3);
     }
+}
+
+@media (min-width: 900px) {
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+        width: calc(220px * 4);
+    }
+}
+
+@media (min-width: 1100px) {
+    .gallery {
+        grid-template-columns: repeat(5, 1fr);
+        width: calc(220px * 5);
+    }
+}
+
+.gallery > img {
+    width: 200px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 10px solid #f2f2f2;
+    box-shadow: 0 0 4px #0007;
+    animation: slide var(--d) infinite, z-order var(--d) infinite steps(1);
+    display: none; /* initially hide all images */
+    height:200px;
+}
+
+    /* Show the first 3 images by default */
+    .gallery > img:nth-child(-n+3) {
+        display: block;
+    }
+
+/* Show the 4th image at 900px wide */
+@media (min-width: 900px) {
+    .gallery > img:nth-child(4) {
+        display: block;
+    }
+}
+
+/* Show the 5th image at 1100px wide */
+@media (min-width: 1100px) {
+    .gallery > img:nth-child(5) {
+        display: block;
+    }
+}
+
 
         .gallery > img:nth-child(1) {
             --delay: calc((1 - 1) / var(--n) * var(--d));

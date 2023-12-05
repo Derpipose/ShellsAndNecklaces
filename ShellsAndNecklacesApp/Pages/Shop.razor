@@ -9,6 +9,10 @@
 @using ShellAndNecklaceAPI.Data
 @using ShellAndNecklaceAPI.Data.DTOs;
 @using ShellAndNecklaceAPI.Services;
+
+
+<PageTitle>Shop</PageTitle>
+
 <h3>Shop</h3>
 
 <ul class="pagination mt-3">
@@ -68,6 +72,7 @@ else
     private string sortOrder = "asc"; // Default sorting order
     private int itemsPerPage { get; set; } = 3;
 
+
     protected override async Task OnInitializedAsync()
     {
         //var context = ContextFactory.CreateDbContext();
@@ -78,6 +83,7 @@ else
 
     private async Task FetchItemsAsync()
     {
+
         try
         {
             var itemContext = ContextFactory.CreateDbContext();
@@ -156,3 +162,10 @@ else
         StateHasChanged(); // Refresh UI
     }
 }
+
+@* 
+drawing with mouse:
+        canvas html tag
+        javascript:
+        getcontext
+        mouse down event *@
