@@ -129,10 +129,9 @@ h3 {
 }
 
 .cart-button {
-    position: sticky;
-    z-index: 1;
+    margin-left: 16px;
+    padding-top: 2px;
 }
-
 
 .topnavContents {
     /*margin:10%*/
