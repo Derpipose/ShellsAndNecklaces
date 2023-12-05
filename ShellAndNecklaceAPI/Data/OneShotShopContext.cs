@@ -34,7 +34,7 @@ public partial class OneShotShopContext : DbContext
     public virtual DbSet<Status> Statuses { get; set; }
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      //=> optionsBuilder.UseNpgsql("OneShotShop");
+      //=> optionsBuilder.UseNpgsql("public");
    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
 
@@ -45,7 +45,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("account_pkey");
 
-            entity.ToTable("account", "OneShotShop");
+            entity.ToTable("account", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address)
@@ -68,7 +68,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("filetype_pkey");
 
-            entity.ToTable("filetype", "OneShotShop");
+            entity.ToTable("filetype", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Fileextension)
@@ -80,7 +80,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("item_pkey");
 
-            entity.ToTable("item", "OneShotShop");
+            entity.ToTable("item", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description)
@@ -106,7 +106,7 @@ public partial class OneShotShopContext : DbContext
         modelBuilder.Entity<ItemReview>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("itemreview_pkey");
-            entity.ToTable("itemreview", "OneShotShop");
+            entity.ToTable("itemreview", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Itemid).HasColumnName("itemid");
@@ -127,7 +127,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("orderitem_pkey");
 
-            entity.ToTable("orderitem", "OneShotShop");
+            entity.ToTable("orderitem", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Itemid).HasColumnName("itemid");
@@ -150,7 +150,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("picture_pkey");
 
-            entity.ToTable("picture", "OneShotShop");
+            entity.ToTable("picture", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Filetypeid).HasColumnName("filetypeid");
@@ -167,7 +167,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("purchaseorder_pkey");
 
-            entity.ToTable("purchaseorder", "OneShotShop");
+            entity.ToTable("purchaseorder", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Accountid).HasColumnName("accountid");
@@ -190,7 +190,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("review_pkey");
 
-            entity.ToTable("review", "OneShotShop");
+            entity.ToTable("review", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Accountid).HasColumnName("accountid");
@@ -208,7 +208,7 @@ public partial class OneShotShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("status_pkey");
 
-            entity.ToTable("status", "OneShotShop");
+            entity.ToTable("status", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Status1)
