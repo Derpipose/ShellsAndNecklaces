@@ -25,7 +25,7 @@ namespace ShellAndNecklaceAPI.Services
                 List<Purchaseorder> PurchaseHistory = (List<Purchaseorder>)from p in _Context.Purchaseorders
                                       join o in _Context.Orderitems on p.Id equals o.Orderid
                                       join a in _Context.Accounts on p.Accountid equals a.Id
-                                      where a.Username == acc.Username && a.Password == acc.Password
+                                      where a.Username == acc.Username
                                       select p;
 
                 var itemsordered = from o in _Context.Orderitems
