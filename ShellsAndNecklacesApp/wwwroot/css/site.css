@@ -36,8 +36,6 @@ a, .btn-link {
 
 
 
-
-
 .business-logo {
     width: 200px;
     border-radius: 60%;
@@ -102,14 +100,17 @@ a, .btn-link {
 
 .AboutImage {
     height: 300px;
-    border-radius: 10px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
+    background-color: rgb(251,250,248);
+    box-shadow: 0px 0px 8px -4px black;
 }
 
 
 .owner-icon {
     float: left;
-    margin: 5px;
+    margin-bottom: 10px;
+    background-color: rgba(206,170,160,1);
+    margin-right: 10px;
 }
 
 .aboutpage
@@ -129,7 +130,10 @@ h3 {
   
 }
 
-
+.cart-button {
+    position: sticky;
+    z-index: 1;
+}
 
 
 .topnavContents {
@@ -155,17 +159,31 @@ main {
     width: 250px;
     aspect-ratio: 1;
     object-fit: cover;
-    margin:0px 0px 25px 0px;
+    margin: 0px 0px 25px 0px;
+    padding: 10px;
+    background-color: rgb(251,250,248);
+    box-shadow: 0px 0px 8px -4px black;
 }
  
 .topPadding{
     margin: 10px, 5px, 10px, 5px;
 }
 
-.wrappingtext{
-    min-height:max-content;
+.wrappingtext {
+    min-height: max-content;
+    background-color: rgba(206,170,160,1);
+    border-radius: 5px;
+    /*    color: #FBFAF8;*/
 }
 
-.clear{
-    clear:both;
+.padding-wrapping{
+    padding:5px;
+}
+
+.clear {
+    clear: both;
+}
+
+.reviews {
+    margin-top: 35px;
 }
