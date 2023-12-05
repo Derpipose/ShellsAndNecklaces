@@ -2,13 +2,12 @@
 <div class="review-wrap">
     <div class="review" @onclick="RedirectPage">
         <div class="shell-metal">
-            <div class="shell-outer-edge"></div>
              <div class="shell-image-container">
                 <img class="shell-image" src="1220WinchesterBlue.jpg" alt="Review Image" />
             </div> 
-            @* <div class="shell-inner-edge"></div> *@
         </div>
         <div class= "shell-body">
+            <p class="review-user">@UserName</p>
             <p class="review-rating">Rating: <span>
                 @for(int i = 0; i < FullStars; i++)
                 {
@@ -21,7 +20,6 @@
                 </span>
             </p>
             <p class="review-text">@ShortenedReviewText</p>
-            <p class="review-user">@UserName</p>
         </div>
     </div>
     <Popup @ref="popupRef" />
@@ -86,38 +84,39 @@
 <style>
     .review-wrap{
         display:flex;
-        margin-bottom: 3em;
+        margin-bottom: 20px;
+        align-content:center;
     }
     .review {
         height:250px;
         min-width: 450px;
         max-width: 800px;
-        margin-bottom: 2em;
         border: 1px solid black;
         border-radius: 10px;
         display: flex;
         font-size: large;
     }
 
-    .review:hover {
-        box-shadow:5px 5px 50px red;
+    .shell-body:hover {
         cursor: pointer;
     }
 
     .reviews :nth-child(odd of .review-wrap) .review{
-        background-color: #d12126;
+        background-color: rgba(206,170,160,1);
+        margin-left:20%;
     }
 
     .reviews :nth-child(odd of .review-wrap):not(:hover) .review{
-        box-shadow: 5px 5px 5px #451112;
+        box-shadow: 5px 5px 5px rgba(106,70,60,1);
     }
 
     .reviews :nth-child(even of .review-wrap) .review{
-        background-color: #c968d4;
+        background-color: rgba(206,170,160,1);
+        margin-left: 5%%;
     }
 
     .reviews :nth-child(even of .review-wrap):not(:hover) .review{
-        box-shadow: 5px 5px 5px #872596;
+        box-shadow: 5px 5px 5px rgba(106,70,60,1);
     }
 
     /* from https://codepen.io/chilliconcode/pen/OWxqYR */
@@ -126,7 +125,6 @@
         aspect-ratio: 1 / 1;
         height: inherit;
         border-radius: 10px 0 0 10px;
-        background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
     }
     .shell-outer-edge {
         position: relative;
@@ -142,17 +140,11 @@
         overflow: hidden;
         aspect-ratio: 1/1;
         position: absolute;
-        border-radius: 50%;
+        border-radius: 3%;
     }
-/*     .shell-image-container::after {
-        content: "";
-        display:block;
-        padding-bottom: 100%;
-    } */
     .shell-image {
         position:absolute;
         height: inherit;
-        /* object-fit: cover; */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -164,19 +156,12 @@
         justify-content: space-between;
     }
     
-    .review-rating {
-        order: 1
-    }
+
     .review-rating span {
         color: gold;
     }
 
-    .review-text {
-        order: 2;
-    }
-    .review-user {
-        order: 3;
-    }
+ 
 
     
 </style>

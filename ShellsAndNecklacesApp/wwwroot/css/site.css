@@ -104,12 +104,15 @@ a, .btn-link {
     height: 300px;
     border-radius: 10px;
     padding: 10px 10px 10px 10px;
+    
 }
 
 
 .owner-icon {
     float: left;
-    margin: 5px;
+    margin-bottom: 10px;
+    background-color: rgba(206,170,160,1);
+    margin-right: 10px;
 }
 
 .aboutpage
@@ -162,10 +165,21 @@ main {
     margin: 10px, 5px, 10px, 5px;
 }
 
-.wrappingtext{
-    min-height:max-content;
+.wrappingtext {
+    min-height: max-content;
+    background-color: rgba(206,170,160,1);
+    border-radius: 5px;
+    /*    color: #FBFAF8;*/
 }
 
-.clear{
-    clear:both;
+.padding-wrapping{
+    padding:5px;
+}
+
+.clear {
+    clear: both;
+}
+
+.reviews {
+    margin-top: 35px;
 }
