@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ShellAndNecklaceUnitTests
 {
-	public class FakeItemController
+	/*public class FakeItemController
 	{
 		private List<Item> _items;
 		public FakeItemController()
@@ -171,5 +171,5 @@ namespace ShellAndNecklaceUnitTests
 			//assert
 			
 		}
-	}
+	}*/
 }

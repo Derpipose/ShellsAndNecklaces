@@ -7,6 +7,7 @@
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
 @using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI.Data.DTOs;
 @using ShellAndNecklaceAPI.Services;
 <h3>Shop</h3>
 
@@ -43,11 +44,11 @@
     @foreach (var item in itemList)
     {
 <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="@item.Picture" alt="picture of @item.Itemname">
+    <img class="card-img-top" src="@item.PicId" alt="picture of @item.Name">
     <div class="card-body">
-        <h5 class="card-title">@item.Itemname</h5>
+        <h5 class="card-title">@item.Name</h5>
         <p class="card-text">Description</p>
-                <a href="/store/item/@item.Id" class="btn btn-primary">@*item name from data*@</a>
+                <a href="/store/item/@item.Name" class="btn btn-primary">@*item name from data*@</a>
     </div>
 </div>
     }
@@ -61,29 +62,36 @@ else
     [Parameter]
     public int currentPage { get; set; } = 0;
 
-    private List<Item> itemList;
+    private List<ItemDTO> itemList;
     private int totalPages { get; set; }
     private string sortBy = "name"; // Default sorting by name
     private string sortOrder = "asc"; // Default sorting order
-    private int itemsPerPage { get; set; } = 10;
+    private int itemsPerPage { get; set; } = 3;
 
     protected override async Task OnInitializedAsync()
     {
-        var context = ContextFactory.CreateDbContext();
-        ItemService itemService = new ItemService(itemLogger, context);
-        itemList = itemService.GetAll();
-        await FetchItemsAsync();
-        
+        //var context = ContextFactory.CreateDbContext();
+        //ItemService itemService = new ItemService(itemLogger, context);
+        //itemList = itemService.GetAll();
+        //await FetchItemsAsync();
     }
 
     private async Task FetchItemsAsync()
     {
         try
         {
-            
-            if (context.Items != null)
+            var itemContext = ContextFactory.CreateDbContext();
+            if (itemContext.Items.Any())
             {
-                IQueryable<Item> query = context.Items.OrderBy(item => item.Itemname);
+                //IQueryable<Item> query = itemContext.Items.OrderBy(item => item.Itemname);
+                var query = itemContext.Items.AsQueryable();
+
+
+                var queriedItems = await itemContext.Items
+                    .OrderBy(item => item.Itemname)
+                    .Skip((currentPage - 1) * itemsPerPage)
+                    .Take(itemsPerPage)
+                    .ToListAsync();
 
                 if (sortBy == "name")
                 {
@@ -93,6 +101,14 @@ else
                 {
                     query = sortOrder == "asc" ? query.OrderBy(item => item.Pricebase) : query.OrderByDescending(item => item.Pricebase);
                 }
+
+                itemList = query.Select(item => new ItemDTO
+                    {
+                        Name = item.Itemname,
+                        Description = item.Description,
+                        StatusId = item.Statusid ?? 0,
+                        PicId = item.Pictureid ?? 0
+                    }).ToList();
             }
             else
             {
@@ -105,7 +121,7 @@ else
             }
             else { }
             var itemCount = itemList.Count();
-            if (itemCount < 1)
+            if (itemCount < 1 || itemCount == null)
             {
                 totalPages = 1;
             }
@@ -121,11 +137,6 @@ else
                 return;
             }
             else { }
-            itemList = await context.Items
-            .Skip((currentPage - 1) * itemsPerPage)
-            .Take(itemsPerPage)
-            .ToListAsync();
-
         }
         catch (Exception e)
         {
@@ -136,8 +147,9 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        await FetchItemsAsync();
     }
-    
+
     private async Task HandleSortChangeAsync()
     {
         await FetchItemsAsync(); // Re-fetch items based on the updated sorting criteria
