@@ -7,6 +7,7 @@
             </div> 
         </div>
         <div class= "shell-body">
+            <p class="review-user">@UserName</p>
             <p class="review-rating">Rating: <span>
                 @for(int i = 0; i < FullStars; i++)
                 {
@@ -19,7 +20,6 @@
                 </span>
             </p>
             <p class="review-text">@ShortenedReviewText</p>
-            <p class="review-user">@UserName</p>
         </div>
     </div>
     <Popup @ref="popupRef" />
@@ -102,21 +102,21 @@
     }
 
     .reviews :nth-child(odd of .review-wrap) .review{
-        background-color: #d12126;
-        margin-left:15%;
+        background-color: rgba(206,170,160,1);
+        margin-left:20%;
     }
 
     .reviews :nth-child(odd of .review-wrap):not(:hover) .review{
-        box-shadow: 5px 5px 5px #451112;
+        box-shadow: 5px 5px 5px rgba(106,70,60,1);
     }
 
     .reviews :nth-child(even of .review-wrap) .review{
-        background-color: #c968d4;
-        margin-right: 15%;
+        background-color: rgba(206,170,160,1);
+        margin-left: 5%%;
     }
 
     .reviews :nth-child(even of .review-wrap):not(:hover) .review{
-        box-shadow: 5px 5px 5px #872596;
+        box-shadow: 5px 5px 5px rgba(106,70,60,1);
     }
 
     /* from https://codepen.io/chilliconcode/pen/OWxqYR */
@@ -142,15 +142,9 @@
         position: absolute;
         border-radius: 3%;
     }
-/*     .shell-image-container::after {
-        content: "";
-        display:block;
-        padding-bottom: 100%;
-    } */
     .shell-image {
         position:absolute;
         height: inherit;
-        /* object-fit: cover; */
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -162,19 +156,12 @@
         justify-content: space-between;
     }
     
-    .review-rating {
-        order: 1
-    }
+
     .review-rating span {
         color: gold;
     }
 
-    .review-text {
-        order: 2;
-    }
-    .review-user {
-        order: 3;
-    }
+ 
 
     
 </style>
