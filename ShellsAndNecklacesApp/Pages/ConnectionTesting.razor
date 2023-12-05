@@ -1,0 +1,105 @@
+﻿@page "/stor/{currentPage:int}"
+
+
+@inject IDbContextFactory<OneShotShopContext> ContextFactory
+@inject NavigationManager NavManager
+@inject ILogger<ItemService> itemLogger
+@using Microsoft.EntityFrameworkCore;
+@using ShellAndNecklaceAPI
+@using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI.Services;
+<h3>Shop</h3>
+
+<ul class="pagination mt-3">
+    <li class="page-item @(currentPage == 1? "disabled" : "")">
+        <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
+    </li>
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        <li class="page-item @(currentPage == i? "active" : "")">
+            <a class="page-link" href="/store/@i">@i</a>
+        </li>
+    }
+    <li class="page-item @(currentPage == totalPages? "disabled" : "")">
+        <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
+    </li>
+</ul>
+
+<select @bind="sortBy">
+    <option value="name">Name</option>
+    <option value="price">Price</option>
+</select>
+
+<select @bind="sortOrder">
+    <option value="asc">Ascending</option>
+    <option value="desc">Descending</option>
+</select>
+
+<button @onclick="HandleSortChangeAsync">Apply Sort</button>
+
+@*Need style for each status, pagination, automatic making cards*@
+@if (itemList != null && itemList.Any())
+{
+    @foreach (var item in itemList)
+    {
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="@item.Picture" alt="picture of @item.Itemname">
+            <div class="card-body">
+                <h5 class="card-title">@item.Itemname</h5>
+                <p class="card-text">Description</p>
+                <a href="/store/item/@item.Id" class="btn btn-primary">@*item name from data*@</a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>No items found.</p>
+}
+
+@code {
+    [Parameter]
+    public int currentPage { get; set; } = 0;
+
+    private List<Item> itemList;
+    private int totalPages { get; set; }
+    private string sortBy = "name"; // Default sorting by name
+    private string sortOrder = "asc"; // Default sorting order
+    private int itemsPerPage { get; set; } = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var context = ContextFactory.CreateDbContext();
+        ItemService itemService = new ItemService(itemLogger, context);
+        //itemList = itemService.GetAll();
+        await FetchItemsAsync();
+
+    }
+
+    private async Task FetchItemsAsync()
+    {
+        try
+        {
+            var itemContext = ContextFactory.CreateDbContext();
+            foreach (Item item in itemContext.Items){
+                Console.WriteLine(item.ToString);
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error:{e.Message}");
+        }
+    }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+    }
+
+    private async Task HandleSortChangeAsync()
+    {
+        await FetchItemsAsync(); // Re-fetch items based on the updated sorting criteria
+        StateHasChanged(); // Refresh UI
+    }
+}
