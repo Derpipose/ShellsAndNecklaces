@@ -2,11 +2,9 @@
 <div class="review-wrap">
     <div class="review" @onclick="RedirectPage">
         <div class="shell-metal">
-            <div class="shell-outer-edge"></div>
              <div class="shell-image-container">
                 <img class="shell-image" src="1220WinchesterBlue.jpg" alt="Review Image" />
             </div> 
-            @* <div class="shell-inner-edge"></div> *@
         </div>
         <div class= "shell-body">
             <p class="review-rating">Rating: <span>
@@ -87,6 +85,7 @@
     .review-wrap{
         display:flex;
         margin-bottom: 3em;
+        align-content:center;
     }
     .review {
         height:250px;
@@ -99,13 +98,13 @@
         font-size: large;
     }
 
-    .review:hover {
-        box-shadow:5px 5px 50px red;
+    .shell-body:hover {
         cursor: pointer;
     }
 
     .reviews :nth-child(odd of .review-wrap) .review{
         background-color: #d12126;
+        margin-left:15%;
     }
 
     .reviews :nth-child(odd of .review-wrap):not(:hover) .review{
@@ -114,6 +113,7 @@
 
     .reviews :nth-child(even of .review-wrap) .review{
         background-color: #c968d4;
+        margin-right: 15%;
     }
 
     .reviews :nth-child(even of .review-wrap):not(:hover) .review{
@@ -126,7 +126,6 @@
         aspect-ratio: 1 / 1;
         height: inherit;
         border-radius: 10px 0 0 10px;
-        background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
     }
     .shell-outer-edge {
         position: relative;
@@ -142,7 +141,7 @@
         overflow: hidden;
         aspect-ratio: 1/1;
         position: absolute;
-        border-radius: 50%;
+        border-radius: 3%;
     }
 /*     .shell-image-container::after {
         content: "";

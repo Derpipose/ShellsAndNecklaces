@@ -166,7 +166,10 @@ main {
     min-height:max-content;
 }
 
-.clear {
-    clear: both;
+.clear{
+    clear:both;
 }
 
+.reviews {
+    margin-top: 35px;
+}
