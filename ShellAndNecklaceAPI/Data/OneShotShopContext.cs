@@ -211,7 +211,7 @@ public partial class OneShotShopContext : DbContext
             entity.ToTable("status", "public");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Status1)
+            entity.Property(e => e.StatusCode)
                 .HasMaxLength(16)
                 .HasColumnName("status");
         });

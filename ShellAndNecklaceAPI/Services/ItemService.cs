@@ -19,8 +19,10 @@ namespace ShellAndNecklaceAPI.Services
         {
             try
             {
+                logger.LogInformation("Retrieving item list...");
                 List<ItemDTO> items = new List<ItemDTO>();
                 var itemlist = await _context.Items.ToListAsync();
+                var statusstringlist = await _context.Statuses.ToListAsync();
 
                 foreach (Item i in itemlist)
                 {
@@ -33,8 +35,14 @@ namespace ShellAndNecklaceAPI.Services
                                             strfile = ftypes.Fileextension
                                         };
                     string picstring = piccomponents.ToString();
-
-                    var statusstring = _context.Statuses.SingleAsync(s => s.Id == i.Statusid).ToString();
+                    string statusstring = "";
+                    foreach(Status s in statusstringlist)
+                    {
+                        if(i.Statusid == s.Id)
+                        {
+                            statusstring = s.StatusCode;
+                        }
+                    }
                     
                     items.Add(new ItemDTO()
                     {
@@ -45,47 +53,54 @@ namespace ShellAndNecklaceAPI.Services
                         //  Status = statusstring
                     });
                 }
-
+                logger.LogInformation("Item list compiled as data transfer object.\nReturning...");
                 return items;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.ToString());
+                logger.LogError($"Failure {ex.Message} occurred in item list retrieval!");
+                throw new Exception("Failure in retrieving items!");
             }
         }
 
-        public async Task<ItemDTO> Get(string id)
+        public async Task<ItemDTO> Get(string name)
         {
-            if (id == null)
+            if (name == null)
             {
                 logger.LogError("No ID provided!");
-                throw new ArgumentNullException("id");
+                throw new ArgumentNullException("user");
             }
-
-            Int32 intid = 0;
-            if (!Int32.TryParse(id, out intid))
+            try
             {
-                logger.LogError("ID was not an Integer!");
+                logger.LogInformation("Item name provided, attempting access.");
+                ItemDTO itemEnt = (ItemDTO)(from i in _context.Items
+                                            join p in _context.Pictures
+                                              on i.Pictureid equals p.Id
+                                            join f in _context.Filetypes
+                                              on p.Filetypeid equals f.Id
+                                            join s in _context.Statuses
+                                              on i.Statusid equals s.Id
+                                            select new
+                                            {
+                                                Name = i.Itemname,
+                                                Description = i.Description,
+                                                Status = s.StatusCode,
+                                                PriceBase = i.Pricebase,
+                                                PicString = p.Imagename.Concat(f.Fileextension)
+                                            });
+                if (itemEnt.Name == null)
                 {
-                    throw new ArgumentException($"Failure: ID could not be converted to type {intid.GetType()}.");
-                };
+                    throw new Exception("item not found");
+                }
+
+                logger.LogInformation("Access successful, returning found item.");
+                return itemEnt;
             }
-
-            ItemDTO itemEnt = (ItemDTO)(from i in _context.Items
-                                        join p in _context.Pictures
-                                          on i.Pictureid equals p.Id
-                                        join f in _context.Filetypes
-                                          on p.Filetypeid equals f.Id
-                                        select new
-                                        {
-                                            Name = i.Itemname,
-                                            Description = i.Description,
-                                            Status = i.Status,
-                                            PriceBase = i.Pricebase,
-                                            PicString = p.Imagename.Concat(f.Fileextension)
-                                        });
-
-            return itemEnt;
+            catch(Exception ex)
+            {
+                logger.LogError($"Failure \"{ex.Message}\" occurred in item retrieval at " + DateTime.Now + "!");
+                throw new KeyNotFoundException(name + ", " + ex.Message);
+            }
         }
 
         public async Task Delete(Item itemEntityToDelete)
