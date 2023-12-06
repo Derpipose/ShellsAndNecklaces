@@ -186,3 +186,9 @@ main {
 .reviews {
     margin-top: 35px;
 }
+
+.backgroundColoring{
+    background-color: rgb(251,250,248);
+    border-radius: 5px;
+    padding: 15px;
+}
