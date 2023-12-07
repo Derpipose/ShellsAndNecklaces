@@ -204,3 +204,22 @@ main {
     background-color: rgba(126,90,70,1) !important;
     border-color: rgba(126,90,70,1) !important;
 }
+
+.big-thumb {
+    width: 50%;
+    height: 50%;
+    float: left;
+    padding: 20px;
+    background-color: rgba(206,170,160,1);
+    border-radius: 5px;
+}
+
+.StretchGoalText{
+    padding-top: 12px;
+    padding-bottom: 10px;
+}
+
+.centered-banner {
+    align-content: center;
+    justify-content: center;
+}
