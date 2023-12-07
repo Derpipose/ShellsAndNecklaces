@@ -47,12 +47,12 @@
 <Div Class="shop-items">
 
 @*Need style for each status, pagination, automatic making cards*@
-    @if (itemList != null && itemList.Any())
+    @if (queriedItems != null && queriedItems.Any())
     {
-        @foreach (var item in itemList)
+        @foreach (var item in queriedItems)
         {
             @*<div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="@item.PicId" alt="picture of @item.Name">
+                <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
                     <p class="card-text">Description</p>
@@ -61,7 +61,7 @@
             </div>*@
 
             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="1220RemingtonBlue.jpg" alt="picture of @item.Name">
+                <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
                     <p class="card-text">Description</p>
@@ -95,12 +95,12 @@
     [Parameter]
     public int currentPage { get; set; } = 0;
 
-    private List<ItemDTO> itemList;
+    private IEnumerable<ItemDTO> queriedItems { get; set; }
     private IEnumerable<ItemDTO> itemEnum { get; set; }
     private int totalPages { get; set; }
     private string sortBy = "name"; // Default sorting by name
     private string sortOrder = "asc"; // Default sorting order
-    private int itemsPerPage { get; set; } = 3;
+    private int itemsPerPage { get; set; } = 10;
 
 
     protected override async Task OnInitializedAsync()
@@ -120,30 +120,20 @@
             if (itemContext.Items.Any())
             {
                 //IQueryable<Item> query = itemContext.Items.OrderBy(item => item.Itemname);
-                var query = itemContext.Items.AsQueryable();
 
-                var queriedItems = await itemContext.Items
-                    .OrderBy(item => item.Itemname)
-                    .Skip((currentPage - 1) * itemsPerPage)
-                    .Take(itemsPerPage)
-                    .ToListAsync();
+                queriedItems = itemEnum
+                                            .OrderBy(item => item.Name)
+                                            .Skip((currentPage - 1) * itemsPerPage)
+                                            .Take(itemsPerPage);
 
                 if (sortBy == "name")
                 {
-                    query = sortOrder == "asc" ? query.OrderBy(item => item.Itemname) : query.OrderByDescending(item => item.Itemname);
+                    queriedItems = sortOrder == "asc" ? queriedItems.OrderBy(item => item.Name) : queriedItems.OrderByDescending(item => item.Name);
                 }
                 else if (sortBy == "price")
                 {
-                    query = sortOrder == "asc" ? query.OrderBy(item => item.Pricebase) : query.OrderByDescending(item => item.Pricebase);
+                    queriedItems = sortOrder == "asc" ? queriedItems.OrderBy(item => item.PriceBase) : queriedItems.OrderByDescending(item => item.PriceBase);
                 }
-
-                itemList = query.Select(item => new ItemDTO
-                    {
-                        Name = item.Itemname,
-                        Description = item.Description,
-                        StatusId = item.Statusid ?? 0,
-                        PicId = item.Pictureid ?? 0
-                    }).ToList();
             }
             else
             {
@@ -155,7 +145,7 @@
                 return;
             }
             else { }
-            var itemCount = itemList.Count();
+            var itemCount = itemEnum.Count();
             if (itemCount < 1 || itemCount == null)
             {
                 totalPages = 1;
