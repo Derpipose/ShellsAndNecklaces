@@ -23,7 +23,7 @@
     {
         var context = await ContextFactory.CreateDbContextAsync();
         dbservice = new CartService(itemLogger, context);
-        itemlist = await dbservice.GetUserCart();
+        //itemlist = await dbservice.GetUserCart();
 
     }
 }
