@@ -9,6 +9,12 @@ namespace ShellAndNecklaceAPI.Services;
     {
         private readonly ILogger<ReviewService> logger;
         private OneShotShopContext _Context;
+        
+        public ReviewService(ILogger<ReviewService> logger, OneShotShopContext context)
+        {
+            this.logger = logger;
+            this._Context = context;
+        }
 
         public async Task CreateItemReview(ItemReviewDTO itemrev)
         {

@@ -11,9 +11,10 @@ namespace ShellAndNecklaceAPI.Services;
         private readonly ILogger<AccountService> logger;
         private OneShotShopContext _context;
 
-        public AccountService(ILogger<AccountService> logger)
+        public AccountService(ILogger<AccountService> logger, OneShotShopContext context)
         {
             this.logger = logger;
+            this._context = context;
         }
 
         public async Task CreateAccount(AccountDTO acc)

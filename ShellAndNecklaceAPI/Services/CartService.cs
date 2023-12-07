@@ -11,9 +11,10 @@ namespace ShellAndNecklaceAPI.Services
         private readonly ILogger<CartService> logger;
         private OneShotShopContext _context;
 
-        public CartService(ILogger<CartService> logger)
+        public CartService(ILogger<CartService> logger, OneShotShopContext context)
         {
             this.logger = logger;
+            _context = context;
         }
 
         public async Task<List<CartDTO>> GetUserCart(string user)
