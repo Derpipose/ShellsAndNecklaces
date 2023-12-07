@@ -25,15 +25,9 @@ namespace ShellAndNecklaceAPI.Services;
 
                 foreach (Item i in itemlist)
                 {
-                    var piccomponents = from pics in _context.Pictures
-                                        join ftypes in _context.Filetypes on pics.Filetypeid equals ftypes.Id
-                                        where pics.Id == i.Pictureid
-                                        select new
-                                        {
-                                            str = pics.Imagename,
-                                            strfile = ftypes.Fileextension
-                                        };
-                    string picstring = piccomponents.ToString();
+                    var piccomponents = await _context.Pictures.FirstOrDefaultAsync(p => p.Id == i.Pictureid);
+                    var filecomponents = await _context.Filetypes.FirstOrDefaultAsync(f => f.Id == piccomponents.Filetypeid);
+                    string picstring = piccomponents.Imagename + filecomponents.Fileextension;
                     string statusstring = "";
                     foreach (Status s in statusstringlist)
                     {
@@ -72,21 +66,18 @@ namespace ShellAndNecklaceAPI.Services;
             try
             {
                 logger.LogInformation("Item name provided, attempting access.");
-                ItemDTO itemEnt = (ItemDTO)(from i in _context.Items
-                                            join p in _context.Pictures
-                                              on i.Pictureid equals p.Id
-                                            join f in _context.Filetypes
-                                              on p.Filetypeid equals f.Id
-                                            join s in _context.Statuses
-                                              on i.Statusid equals s.Id
-                                            select new
-                                            {
-                                                Name = i.Itemname,
-                                                Description = i.Description,
-                                                Status = s.Status1,
-                                                PriceBase = i.Pricebase,
-                                                PicString = p.Imagename.Concat(f.Fileextension)
-                                            });
+            var itemdeets = await _context.Items.FirstOrDefaultAsync(i => i.Itemname == name);
+            var piccontents = await _context.Pictures.FirstOrDefaultAsync(p => p.Id == itemdeets.Pictureid);
+            var filedeets = await _context.Filetypes.FirstOrDefaultAsync(ft => ft.Id == piccontents.Filetypeid);
+                var statusdeets = await _context.Statuses.FirstOrDefaultAsync(s => s.Id == itemdeets.Statusid);
+
+                ItemDTO itemEnt = new ItemDTO() {
+                    Name = itemdeets.Itemname,
+                    Description = itemdeets.Description,
+                    PicString = piccontents.Imagename + filedeets.Fileextension,
+                    PriceBase = itemdeets.Pricebase,
+                    StatusType = statusdeets.Status1
+                };
                 if (itemEnt.Name == null)
                 {
                     throw new Exception("item not found");
