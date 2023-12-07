@@ -5,7 +5,7 @@ on:
     - main
 env:
   AZURE_WEBAPP_NAME: ShellsAndNecklace
-  AZURE_WEBAPP_PACKAGE_PATH: ./published
+  AZURE_WEBAPP_PACKAGE_PATH: ./publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: ShellsAndNecklacesApp
@@ -31,6 +31,8 @@ jobs:
       with:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Show Azure Web App Package Path
+      run: echo "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
   deploy:
     runs-on: ubuntu-latest
     needs: build
