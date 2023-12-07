@@ -4,8 +4,7 @@ using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ShellAndNecklaceAPI.Services
-{
+namespace ShellAndNecklaceAPI.Services;
     public class ReviewService
     {
         private readonly ILogger<ReviewService> logger;
@@ -22,7 +21,7 @@ namespace ShellAndNecklaceAPI.Services
                 logger.LogError("Item review creation failed at" + DateTime.Now.ToString() + "! Item not found!");
                 throw new KeyNotFoundException("Item not found!");
             }
-            if(accid == null)
+            if (accid == null)
             {
                 logger.LogError("Item review creation failed at" + DateTime.Now.ToString() + "! Account not found!");
                 throw new KeyNotFoundException("Account not found!");
@@ -33,7 +32,7 @@ namespace ShellAndNecklaceAPI.Services
                 Accountid = accid,
                 Itemid = itemid,
                 Rating = itemrev.Rating,
-                Reviewdate = itemrev.ReviewDate,
+                Reviewdate = (DateTime)itemrev.ReviewDate,
                 Reviewtext = itemrev.ItemReviewText
             };
             _Context.ItemReviews.Add(newitemreview);
@@ -61,7 +60,8 @@ namespace ShellAndNecklaceAPI.Services
             var picstring = from p in _Context.Pictures
                             join ft in _Context.Filetypes on p.Filetypeid equals ft.Id
                             where itemofinterest.Pictureid == p.Id
-                            select new {
+                            select new
+                            {
                                 pstr = p.Imagename + ft.Fileextension
                             };
             logger.LogInformation("Picture file retrieved.");
@@ -103,7 +103,8 @@ namespace ShellAndNecklaceAPI.Services
                 throw new KeyNotFoundException("Account not found!");
             }
 
-            var newrev = new Review(){
+            var newrev = new Review()
+            {
                 Accountid = Accid.Id,
                 Rating = review.RatingScore,
                 Reviewbody = review.ReviewText,
@@ -118,15 +119,15 @@ namespace ShellAndNecklaceAPI.Services
         {
             logger.LogInformation("Attempting retrieval of a few reviews...");
             List<ReviewDTO> reviewset = (List<ReviewDTO>)from r in _Context.Reviews
-                                        join a in _Context.Accounts on r.Accountid equals a.Id
-                                        orderby r.Rating descending
-                                        select new ReviewDTO()
-                                        {
-                                            Username = a.Username,
-                                            RatingScore = r.Rating,
-                                            ReviewDate = (DateTime)r.Reviewdate,
-                                            ReviewText = r.Reviewbody
-                                        };
+                                                         join a in _Context.Accounts on r.Accountid equals a.Id
+                                                         orderby r.Rating descending
+                                                         select new ReviewDTO()
+                                                         {
+                                                             Username = a.Username,
+                                                             RatingScore = r.Rating,
+                                                             ReviewDate = (DateTime)r.Reviewdate,
+                                                             ReviewText = r.Reviewbody
+                                                         };
 
             if (reviewset.IsNullOrEmpty())
             {
@@ -137,4 +138,3 @@ namespace ShellAndNecklaceAPI.Services
             return (List<ReviewDTO>)reviewset.Take(count);
         }
     }
-}

@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 
-namespace ShellAndNecklaceAPI.Services
-{
+namespace ShellAndNecklaceAPI.Services;
+
     public class AccountService
     {
         private readonly ILogger<AccountService> logger;
@@ -16,18 +16,44 @@ namespace ShellAndNecklaceAPI.Services
             this.logger = logger;
         }
 
+        public async Task CreateAccount(AccountDTO acc)
+        {
+            try
+            {
+                if(acc == null || acc.Email == null)
+                {
+                    throw new ArgumentNullException("No account provided.");
+                }    
+
+                logger.LogInformation("Account received. Attempting to create entity...");
+                Account newAcc = new Account()
+                {
+                    Address = acc.Address,
+                    Email = acc.Email,
+                    Username = acc.Username,
+                    Verified = true,
+                    Phone = acc.Phone
+                };
+                
+                _context.Accounts.Add(newAcc);
+            }
+            catch (Exception ex) {
+                logger.LogError($"{ex.Message}");
+            }
+        }
+
         public async Task<IEnumerable<AccountDTO>> GetAll()
         {
-            logger.LogInformation("Confirmed; attempt to get all account details recognized.\n" +
-                "Access denied: no such action permitted!");
-            //throw new NotImplementedException();
+            logger.LogInformation("confirmed; attempt to get all account details recognized.\n" +
+                "access denied: no such action permitted!");
+            //throw new notimplementedexception();
 
-            var AccList = await _context.Accounts.ToListAsync();
-            List<AccountDTO> Acc = new List<AccountDTO>();
+            var acclist = await _context.Accounts.ToListAsync();
+            List<AccountDTO> acc = new List<AccountDTO>();
 
-            foreach (var account in AccList)
+            foreach (var account in acclist)
             {
-                Acc.Add(new AccountDTO
+                acc.Add(new AccountDTO
                 {
                     Username = account.Username,
                     Email = account.Email,
@@ -38,29 +64,36 @@ namespace ShellAndNecklaceAPI.Services
                 });
             }
 
-            return Acc;
+            return acc;
         }
+        
+        public async Task<bool> AccountExists(string user)
+        {
+            var accstatus = await _context.Accounts.FirstOrDefaultAsync(a => a.Email == user);
 
+            if (accstatus == null) return false;
+            else return true;
+        }
         public async Task<AccountDTO> Get(string user)
         {
-            logger.LogInformation("Account details access attempted at " + DateTime.Now);
+            logger.LogInformation("account details access attempted at " + DateTime.Now);
             var context = await _context.Accounts.SingleAsync(acc => (acc.Email == user));
             if (context == null)
             {
-                throw new ArgumentNullException("User not found!");
+                throw new ArgumentNullException("user not found!");
             }
 
-            if((bool)context.Closed)
+            if ((bool)context.Closed)
             {
-                throw new UnauthorizedAccessException("Account is closed!");
+                throw new UnauthorizedAccessException("account is closed!");
             }
 
-            logger.LogInformation("\nAccount " + context.Username + " accessed.");
+            logger.LogInformation("\naccount " + context.Email + " accessed.");
 
             if (!(bool)context.Verified)
             {
-                logger.LogCritical("Accessed account has already been closed!");
-                throw new Exception("This account was closed.");
+                logger.LogCritical("accessed account has already been closed!");
+                throw new Exception("this account was closed.");
             }
 
             return new AccountDTO
@@ -75,14 +108,14 @@ namespace ShellAndNecklaceAPI.Services
 
         public async Task<AccountDTO> Update(Account account)
         {
-            logger.LogInformation($"Account detail attempt for account {account.Username} at {DateTime.Now}.");
+            logger.LogInformation($"account detail attempt for account {account.Email} at {DateTime.Now}.");
             try
             {
-                var updateparcel = await _context.Accounts.SingleAsync(a => a.Id == account.Id);
+                var updateparcel = await _context.Accounts.SingleAsync(a => a.Email == account.Email);
 
                 if ((bool)updateparcel.Closed || updateparcel == null)
                     throw new Exception();
-                
+
                 var updatedparcel = new AccountDTO
                 {
                     Username = account.Username,
@@ -97,31 +130,30 @@ namespace ShellAndNecklaceAPI.Services
             }
             catch (Exception ex)
             {
-                logger.LogError("Failed to update Account Information!");
-                throw new Exception("Failed to update Account Information!");
+                logger.LogError("failed to update account information!");
+                throw new Exception("failed to update account information!");
             }
         }
 
         public async Task Delete(string user)
         {
-            logger.LogInformation($"Attempt to close account {user} confirmed. Proceeding...");
+            logger.LogInformation($"attempt to close account {user} confirmed. proceeding...");
 
             try
             {
                 var usercontext = await _context.Accounts.SingleAsync(a => a.Email == user);
                 if (usercontext == null)
                 {
-                    throw new ArgumentNullException("User not found!");
+                    throw new ArgumentNullException("user not found!");
                 }
 
                 await _context.SaveChangesAsync();
-                logger.LogInformation("Success!");
+                logger.LogInformation("success!");
             }
             catch (Exception ex)
             {
                 logger.LogError($"{ex.Message}");
-                throw new Exception("Failed to update account!");
+                throw new Exception("failed to update account!");
             }
         }
     }
-}
