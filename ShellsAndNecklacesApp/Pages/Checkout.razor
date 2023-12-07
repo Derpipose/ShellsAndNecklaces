@@ -1,29 +1,59 @@
-﻿@page "/checkout"
-@inject IDbContextFactory<OneShotShopContext> ContextFactory
-@inject NavigationManager NavManager
-@inject ILogger<CartService> itemLogger
+﻿@page "/checkout";
+@inject IDbContextFactory<OneShotShopContext> ContextFactory;
+@inject NavigationManager NavManager;
+@inject ILogger<CartService> itemLogger;
+
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor _httpContextAccessor;
+@inject HttpClient Http;
+
 @using Microsoft.EntityFrameworkCore;
 
-@using ShellAndNecklaceAPI
-@using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI;
+@using ShellAndNecklaceAPI.Data;
 @using ShellAndNecklaceAPI.Data.DTOs;
 @using ShellAndNecklaceAPI.Services;
 
 <h3>Cart</h3>
 
-<Div class="d-grid">
-   
+<Div>
+
 </Div>
 
 @code {
     private List<CartDTO> itemlist;
     private CartService dbservice;
+    private ClaimsPrincipal UserForEmail;
+    private string Email;
 
-    protected override async Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
-        var context = await ContextFactory.CreateDbContextAsync();
-        dbservice = new CartService(itemLogger, context);
-        //itemlist = await dbservice.GetUserCart();
+        await base.OnInitializedAsync();
+        try
+        {
+            UserForEmail = _httpContextAccessor.HttpContext.User;
 
+            var givenEmail =
+                _httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.Email);
+            if (givenEmail != null)
+            {
+                Email = givenEmail.Value;
+            }
+            else
+            {
+                Email = "";
+            }
+            var context = await ContextFactory.CreateDbContextAsync();
+            dbservice = new CartService(itemLogger, context);
+            itemlist = await dbservice.GetUserCart(Email);
+
+
+        }
+        catch(Exception ex)
+        {
+            
+        }
     }
 }
