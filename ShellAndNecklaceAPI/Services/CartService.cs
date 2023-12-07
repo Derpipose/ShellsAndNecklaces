@@ -106,18 +106,27 @@ namespace ShellAndNecklaceAPI.Services
             
         }
 
-        public async Task AddToCart(CartDTO cart, string email)
+        public async Task AddToCart(CartDTO cart)
         {
             try
             {
                 logger.LogInformation($"Attempting to add item {cart.itemname} to cart...");
-                var itemid = _context.Items.FirstOrDefaultAsync(i => i.Itemname == cart.itemname).Id;
-                var accid = _context.Accounts.FirstOrDefaultAsync(a => a.Email == email);
+                var itemid = (await _context.Items.FirstOrDefaultAsync(i => i.Itemname == cart.itemname)).Id;
+                var accid = (await _context.Accounts.FirstOrDefaultAsync(a => a.Email == cart.email)).Id;
 
                 if(itemid == null)
                     throw new KeyNotFoundException($"Item {cart.itemname} not found!");
 
-                if (accid == null) throw new KeyNotFoundException($"Account {}");
+                if (accid == null) throw new KeyNotFoundException($"Account {cart.email} not found!");
+
+                _context.Carts.Add(new Cart()
+                {
+                    Itemid = itemid,
+                    Accountid = accid,
+                    Actualprice = cart.actualprice,
+                    Quantity = cart.quantity,
+                });
+                await _context.SaveChangesAsync();
             }
             catch (KeyNotFoundException ex)
             {
