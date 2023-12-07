@@ -3,20 +3,11 @@
 
 <div class="loading-message-container">
     <p>@Message</p>
-    <p>Please wait while page is loading ...</p>
+    <p>Please wait while page is loading</p>
+    <div class="loader"><img class="shell-image" src="shell-edge-stock.jpg" /></div>
 </div>
 
 @code{
     [Parameter]
     public string Message { get; set; } = "We are happy you stopped by!";
 }
-
-<style>
-div.loading-message-container {
-        background: rgb(251,250,248);
-        background: linear-gradient(125deg, rgba(251,250,248,1) 0%, rgba(126,80,70,0.85) 42%, rgba(0,0,0,0.75) 100%);
-        font-size: 2em;
-        padding: 2em 5em 2em 2em;
-
-    }
-</style>
