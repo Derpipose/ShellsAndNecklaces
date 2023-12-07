@@ -216,3 +216,6 @@ main {
 .form-select{
     width: 100px;
 }
+.floatleft{
+    float:right;
+}
