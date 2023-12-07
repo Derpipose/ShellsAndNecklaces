@@ -67,6 +67,7 @@ else
     public int currentPage { get; set; } = 0;
 
     private List<ItemDTO> itemList;
+    private IEnumerable<ItemDTO> itemEnum { get; set; }
     private int totalPages { get; set; }
     private string sortBy = "name"; // Default sorting by name
     private string sortOrder = "asc"; // Default sorting order
@@ -75,10 +76,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        //var context = ContextFactory.CreateDbContext();
-        //ItemService itemService = new ItemService(itemLogger, context);
-        //itemList = itemService.GetAll();
-        //await FetchItemsAsync();
+        var context = ContextFactory.CreateDbContext();
+        ItemService itemService = new ItemService(itemLogger, context);
+        itemEnum = await itemService.GetAll();
+        await FetchItemsAsync();
     }
 
     private async Task FetchItemsAsync()
@@ -91,7 +92,6 @@ else
             {
                 //IQueryable<Item> query = itemContext.Items.OrderBy(item => item.Itemname);
                 var query = itemContext.Items.AsQueryable();
-
 
                 var queriedItems = await itemContext.Items
                     .OrderBy(item => item.Itemname)
