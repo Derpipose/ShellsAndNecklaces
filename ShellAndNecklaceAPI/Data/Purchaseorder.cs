@@ -9,11 +9,9 @@ public partial class Purchaseorder
 
     public int? Accountid { get; set; }
 
-    public string Email { get; set; } = null!;
-
     public string? Notes { get; set; }
 
-    public DateTime? Orderdate { get; set; }
+    public DateTime Orderdate { get; set; }
 
     public virtual Account? Account { get; set; }
 

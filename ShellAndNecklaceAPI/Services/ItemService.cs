@@ -2,8 +2,7 @@
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 
-namespace ShellAndNecklaceAPI.Services
-{
+namespace ShellAndNecklaceAPI.Services;
     public class ItemService
     {
         private readonly ILogger<ItemService> logger;
@@ -36,14 +35,14 @@ namespace ShellAndNecklaceAPI.Services
                                         };
                     string picstring = piccomponents.ToString();
                     string statusstring = "";
-                    foreach(Status s in statusstringlist)
+                    foreach (Status s in statusstringlist)
                     {
-                        if(i.Statusid == s.Id)
+                        if (i.Statusid == s.Id)
                         {
-                            statusstring = s.StatusCode;
+                            statusstring = s.Status1;
                         }
                     }
-                    
+
                     items.Add(new ItemDTO()
                     {
                         Name = i.Itemname,
@@ -84,7 +83,7 @@ namespace ShellAndNecklaceAPI.Services
                                             {
                                                 Name = i.Itemname,
                                                 Description = i.Description,
-                                                Status = s.StatusCode,
+                                                Status = s.Status1,
                                                 PriceBase = i.Pricebase,
                                                 PicString = p.Imagename.Concat(f.Fileextension)
                                             });
@@ -96,7 +95,7 @@ namespace ShellAndNecklaceAPI.Services
                 logger.LogInformation("Access successful, returning found item.");
                 return itemEnt;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.LogError($"Failure \"{ex.Message}\" occurred in item retrieval at " + DateTime.Now + "!");
                 throw new KeyNotFoundException(name + ", " + ex.Message);
@@ -120,4 +119,3 @@ namespace ShellAndNecklaceAPI.Services
             throw new NotImplementedException();
         }
     }
-}
