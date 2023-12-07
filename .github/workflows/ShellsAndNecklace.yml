@@ -31,8 +31,10 @@ jobs:
       with:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-    - name: Show Azure Web App Package Path
-      run: echo "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+    - name: Show env.WORKING_DIRECTORY
+      run: echo "${{ env.WORKING_DIRECTORY }}"
+    - name: Show env.config
+      run: echo "${{ env.CONFIGURATION }}"
   deploy:
     runs-on: ubuntu-latest
     needs: build
