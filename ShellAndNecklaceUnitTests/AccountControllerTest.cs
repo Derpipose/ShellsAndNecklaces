@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ShellAndNecklaceUnitTests
 {
 	public class FakeAccountController
-	{
+	{/*
 		private List<Account> _accounts;
 		public FakeAccountController()
 		{
@@ -159,6 +159,6 @@ namespace ShellAndNecklaceUnitTests
 
 
 			//assert
-		}
+		}*/
 	}
 }

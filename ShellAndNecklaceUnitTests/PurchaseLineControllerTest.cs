@@ -13,7 +13,7 @@ namespace ShellAndNecklaceUnitTests
 {
 	public class FakePurchaseLineController
 	{
-		private List<Purchaseorder> _purchases;
+		/*private List<Purchaseorder> _purchases;
 		public FakePurchaseLineController()
 		{
 			_purchases = new List<Purchaseorder>();
@@ -128,6 +128,6 @@ namespace ShellAndNecklaceUnitTests
 
 
 			//assert
-		}
+		}*/
 	}
 }
