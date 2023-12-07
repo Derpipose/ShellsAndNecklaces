@@ -25,15 +25,9 @@ namespace ShellAndNecklaceAPI.Services;
 
                 foreach (Item i in itemlist)
                 {
-                    var piccomponents = from pics in _context.Pictures
-                                        join ftypes in _context.Filetypes on pics.Filetypeid equals ftypes.Id
-                                        where pics.Id == i.Pictureid
-                                        select new
-                                        {
-                                            str = pics.Imagename,
-                                            strfile = ftypes.Fileextension
-                                        };
-                    string picstring = piccomponents.ToString();
+                    var piccomponents = await _context.Pictures.FirstOrDefaultAsync(p => p.Id == i.Pictureid);
+                    var filecomponents = await _context.Filetypes.FirstOrDefaultAsync(f => f.Id == piccomponents.Filetypeid);
+                    string picstring = piccomponents.Imagename + filecomponents.Fileextension;
                     string statusstring = "";
                     foreach (Status s in statusstringlist)
                     {
