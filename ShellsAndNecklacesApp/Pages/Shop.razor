@@ -43,9 +43,9 @@
 <button @onclick="HandleSortChangeAsync">Apply Sort</button>
 
 @*Need style for each status, pagination, automatic making cards*@
-@if (itemList != null && itemList.Any())
+@if (queriedItems != null && queriedItems.Any())
 {
-    @foreach (var item in itemList)
+    @foreach (var item in queriedItems)
     {
 <div class="card" style="width: 18rem;">
     <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
@@ -71,7 +71,7 @@ else
     private int totalPages { get; set; }
     private string sortBy = "name"; // Default sorting by name
     private string sortOrder = "asc"; // Default sorting order
-    private int itemsPerPage { get; set; } = 3;
+    private int itemsPerPage { get; set; } = 10;
 
 
     protected override async Task OnInitializedAsync()
@@ -92,7 +92,7 @@ else
             {
                 //IQueryable<Item> query = itemContext.Items.OrderBy(item => item.Itemname);
 
-                var queriedItems = itemEnum
+                queriedItems = itemEnum
                                             .OrderBy(item => item.Name)
                                             .Skip((currentPage - 1) * itemsPerPage)
                                             .Take(itemsPerPage);
@@ -116,7 +116,7 @@ else
                 return;
             }
             else { }
-            var itemCount = itemList.Count();
+            var itemCount = itemEnum.Count();
             if (itemCount < 1 || itemCount == null)
             {
                 totalPages = 1;
