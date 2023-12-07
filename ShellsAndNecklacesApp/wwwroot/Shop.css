@@ -1,0 +1,24 @@
+﻿
+.shop-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust as needed */
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* Adjust the gap between cards as needed */
+}
+
+.card {
+    width: 30%; /* Adjust the width of each card as needed */
+    box-sizing: border-box;
+    margin-bottom: 16px; /* Adjust the bottom margin as needed */
+}
+
+/* Adjust the styling of the card as needed */
+.card-img-top {
+    width: 100%;
+    height: auto;
+}
