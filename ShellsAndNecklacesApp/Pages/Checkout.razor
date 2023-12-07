@@ -1,7 +1,27 @@
 ﻿@page "/checkout"
+@inject IDbContextFactory<OneShotShopContext> ContextFactory
+@inject NavigationManager NavManager
+@inject ILogger<CartService> itemLogger
+@using Microsoft.EntityFrameworkCore;
 
-<h3>Checkout</h3>
+@using ShellAndNecklaceAPI
+@using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI.Data.DTOs;
+@using ShellAndNecklaceAPI.Services;
+
+<h3>Cart</h3>
+
+<Div class="d-grid">
+   
+</Div>
 
 @code {
-    
+    private List<CartDTO> itemlist;
+    private CartService dbservice;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var context = await ContextFactory.CreateDbContextAsync();
+        dbservice = new CartService(itemLogger, context);
+    }
 }
