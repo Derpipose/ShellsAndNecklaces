@@ -43,7 +43,7 @@
     private ClaimsPrincipal UserForEmail;
     private string Email;
 
-    protected async override Task OnInitializedAsync()
+    /*protected async override Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         try
@@ -59,16 +59,17 @@
             }
             else
             {
-                Email = "";
+                Email = "zanerclegg@gmail.com";
             }
             var context = await ContextFactory.CreateDbContextAsync();
             dbservice = new CartService(itemLogger, context);
             itemlist = await dbservice.GetUserCart(Email);
+
 
         }
         catch(Exception ex)
         {
             
         }
-    }
+    }*/
 }

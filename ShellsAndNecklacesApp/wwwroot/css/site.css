@@ -222,4 +222,19 @@ main {
 .centered-banner {
     align-content: center;
     justify-content: center;
+
+.floated-image{
+    float:left;
+    width:400px;
+    border-radius: 10px;
 }
+.description-text{
+    font-size:larger;
+}
+
+.form-select{
+    width: 100px;
+}
+.floatleft{
+    float:right;
+  }

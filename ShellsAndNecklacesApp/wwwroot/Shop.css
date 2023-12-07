@@ -20,5 +20,7 @@
 /* Adjust the styling of the card as needed */
 .card-img-top {
     width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
     height: auto;
 }
