@@ -11,6 +11,9 @@
 @using ShellAndNecklaceAPI.Services;
 
 
+<link rel="stylesheet" href="Shop.css" />
+
+
 <PageTitle>Shop</PageTitle>
 
 <h3>Shop</h3>
@@ -47,20 +50,35 @@
 {
     @foreach (var item in itemList)
     {
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="@item.PicId" alt="picture of @item.Name">
-    <div class="card-body">
-        <h5 class="card-title">@item.Name</h5>
-        <p class="card-text">Description</p>
-                <a href="/store/item/@item.Name" class="btn btn-primary">@*item name from data*@</a>
-    </div>
-</div>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="@item.PicId" alt="picture of @item.Name">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">Description</p>
+                <a href="/store/item/@item.Name" class="btn btn-primary">Check out @item.Name</a>
+            </div>
+        </div>
     }
 }
 else
 {
     <p>No items found.</p>
 }
+
+
+<ul class="pagination mt-3">
+    <li class="page-item @(currentPage == 1? "disabled" : "")">
+        <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
+    </li>
+    @for (int i = 1; i <= totalPages; i++) {
+        <li class="page-item @(currentPage == i? "active" : "")">
+            <a class="page-link" href="/store/@i">@i</a>
+        </li>
+    }
+    <li class="page-item @(currentPage == totalPages? "disabled" : "")">
+        <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
+    </li>
+</ul>
 
 @code {
     [Parameter]

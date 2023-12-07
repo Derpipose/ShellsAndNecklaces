@@ -14,7 +14,7 @@
         <img src="customSign1.jpg" alt="WoodSign">
         <img src="doubleWinchesterBlue.jpg" alt="1220WinchesterBlue">
         <img src="singleWinchesterGold.jpg" alt="12WinchesterGold">
-        <img src="turqoiseHoops.jpg" alt="SilverTourquoiseHoops">
+        <img src="turquoiseHoops.jpg" alt="SilverTurquoiseHoops">
         <img src="woodCutouts1.jpg" alt="WoodCutout">
     </div>
 
@@ -36,11 +36,11 @@
             <h3>
                 Customer Appreciation
             </h3>
-            <div class="review">
-                <img>
-                <p>
-                    Review 1
-                </p>
+            <div class="reviews">
+                
+                @for (int i = 0; i < 3; i++) {
+                    <ItemReview />
+                }
             </div>
         </section>
     </section>

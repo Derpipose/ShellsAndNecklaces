@@ -187,8 +187,8 @@ main {
     margin-top: 35px;
 }
 
-.backgroundColoring{
-    background-color: rgb(251,250,248);
+.backgroundColoring {
+    background-color: rgba(206,170,160,1);
     border-radius: 5px;
     padding: 15px;
 }
