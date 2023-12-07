@@ -17,11 +17,9 @@
         
             <h3>@itemname</h3>
             <img class="floated-image AboutImage owner-icon " src="@pageitem.PicString" alt="@pageitem.Name" />
-            <p class="padding-wrapping backgroundColoring description-text">@pageitem.Description</p>
-            <Div Class="clear"></Div>
             <EditForm Model = "@order" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
                 <DataAnnotationsValidator/>
-                <div class="mb-3">
+                <div class="mb-3 floatleft">
                     <Label for ="Quantity" Class="form-label">Quantity</Label>
                     <InputSelect id="Quantity" class="form-select" @bind-Value="order.Quantity">
                         @for (int i = 1; i <= 10; i++) {
@@ -29,6 +27,9 @@
                         }
                     </InputSelect>
                 </div>
+            <p class="padding-wrapping backgroundColoring description-text">$@pageitem.PriceBase each</p>
+            <p class="padding-wrapping backgroundColoring description-text">@pageitem.Description</p>
+            <Div Class="clear"></Div>
 
                 <Div Class="mb-3">
                     <Label for="Customization" Class="form-label">Customization Requests</Label>
