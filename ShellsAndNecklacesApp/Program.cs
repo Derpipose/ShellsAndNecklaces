@@ -12,6 +12,7 @@ using System.Net.Http;
 using Microsoft.Extensions.Configuration;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Services;
+using ShellsAndNecklacesApp;
 
 public partial class Program {
     public IConfiguration _configuration { get; }
@@ -22,8 +23,6 @@ public partial class Program {
     public static void Main(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
 
-
-
         // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor();
@@ -31,16 +30,14 @@ public partial class Program {
         {
             options.UseNpgsql(builder.Configuration.GetConnectionString("OneShotShop"));
         });
-        /*builder.Services.AddDbContext<OneShotShopContext>(options =>
-        {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("OneShotShop"));
-        });*/
+        
         builder.Services
             .AddBlazorise(options => {
                 options.Immediate = true;
             })
             .AddBootstrapProviders()
             .AddFontAwesomeIcons();
+
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         builder.Services.AddAuthentication().AddGoogle(options => {
             var clientid = builder.Configuration["Google:ClientId"];

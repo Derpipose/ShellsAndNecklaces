@@ -11,8 +11,9 @@ public partial class Review
 
     public int? Accountid { get; set; }
 
-    public DateTime? Reviewdate { get; set; }
     public string Reviewbody { get; set; } = null!;
+
+    public DateTime Reviewdate { get; set; }
 
     public virtual Account? Account { get; set; }
 }
