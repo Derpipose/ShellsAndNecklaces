@@ -204,3 +204,15 @@ main {
     background-color: rgba(126,90,70,1) !important;
     border-color: rgba(126,90,70,1) !important;
 }
+.floated-image{
+    float:left;
+    width:400px;
+    border-radius: 10px;
+}
+.description-text{
+    font-size:larger;
+}
+
+.form-select{
+    width: 100px;
+}

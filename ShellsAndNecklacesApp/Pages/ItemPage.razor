@@ -1,0 +1,69 @@
+﻿@page "/store/item/{itemname}"
+
+@inject IDbContextFactory<OneShotShopContext> ContextFactory
+@inject NavigationManager NavManager
+@inject ILogger<ItemService> itemLogger
+@using Microsoft.EntityFrameworkCore;
+@using ShellAndNecklaceAPI
+@using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI.Data.DTOs;
+@using ShellAndNecklaceAPI.Services;
+
+
+
+    @if (initialized) {
+        <PageTitle>@itemname</PageTitle>
+    <Div Class="bodyContents backgroundColoring">
+        
+            <h3>@itemname</h3>
+            <img class="floated-image AboutImage owner-icon " src="@pageitem.PicString" alt="@pageitem.Name" />
+            <p class="padding-wrapping backgroundColoring description-text">@pageitem.Description</p>
+            <Div Class="clear"></Div>
+            <EditForm Model = "@order" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+                <DataAnnotationsValidator/>
+                <div class="mb-3">
+                    <Label for ="Quantity" Class="form-label">Quantity</Label>
+                    <InputSelect id="Quantity" class="form-select" @bind-Value="order.Quantity">
+                        @for (int i = 1; i <= 10; i++) {
+                            <option value="@i">@i</option>
+                        }
+                    </InputSelect>
+                </div>
+
+                <Div Class="mb-3">
+                    <Label for="Customization" Class="form-label">Customization Requests</Label>
+                    <InputText id="Customization" class="form-control" @bind-Value= "order.Notes"></InputText>
+                </Div>
+
+                <button type="submit" class="btn btn-primary">Add To Cart</button>
+            </EditForm>
+        </Div>
+    }
+
+
+@code {
+    [Parameter]
+    public string itemname { get; set; } = "Single Winchester Gold";
+
+    private bool initialized = false;
+
+    private ItemService DBservice;
+    ItemDTO pageitem; 
+    private PurchasedItemDTO order = new PurchasedItemDTO(); // Initialize the order object
+
+
+
+    private async Task HandleValidSubmit() { }
+    private async Task HandleInvalidSubmit() { }
+
+
+    protected override async Task OnInitializedAsync() {
+        var context = ContextFactory.CreateDbContext();
+        ItemService itemService = new ItemService(itemLogger, context);
+        pageitem = await itemService.Get(itemname);
+        initialized = true;
+    }
+
+
+
+}
