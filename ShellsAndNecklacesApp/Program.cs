@@ -28,7 +28,7 @@ public partial class Program {
         builder.Services.AddServerSideBlazor();
         builder.Services.AddDbContextFactory<OneShotShopContext>(options =>
         {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("OneShotShop"));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("OneShotShop"));
         });
         
         builder.Services

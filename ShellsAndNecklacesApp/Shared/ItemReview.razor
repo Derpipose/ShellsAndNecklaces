@@ -1,0 +1,167 @@
+﻿
+<div class="review-wrap">
+    <div class="review" @onclick="RedirectPage">
+        <div class="shell-metal">
+             <div class="shell-image-container">
+                <img class="shell-image" src="1220WinchesterBlue.jpg" alt="Review Image" />
+            </div> 
+        </div>
+        <div class= "shell-body">
+            <p class="review-user">@UserName</p>
+            <p class="review-rating">Rating: <span>
+                @for(int i = 0; i < FullStars; i++)
+                {
+                    <i class="bi bi-star-fill"></i>
+                }
+                @if(HalfStar != 0)
+                {
+                    <i class="bi bi-star-half"></i>
+                }
+                </span>
+            </p>
+            <p class="review-text">@ShortenedReviewText</p>
+        </div>
+    </div>
+    <Popup @ref="popupRef" />
+</div>
+
+
+
+
+@code {
+    public double Rating = 4.5;
+    //0 to 10
+    public int FullStars
+    {
+        get
+        {
+            return (int) Math.Floor(Rating);
+        }
+    }
+    // 0 or 1
+    public int HalfStar
+    {
+        get
+        {
+            if (Rating - (int) Rating != 0) return 1;
+            else return 0;
+        }
+    }
+
+    private string UserName = "Random User Name";
+    public string HeaderUserName
+    {
+        get
+        {
+            return "Review from " + UserName;
+        }
+    }
+
+    private string FullReviewText = @"The earings I ordered were perfect and wonderful. Now I can show off the things that my husband and I enjoy, hunting. The wood burned signs were also a very nice feature that we loved as well!";
+
+    public string ShortenedReviewText
+    {
+        get
+        {
+            if (FullReviewText is null) return "";
+
+            string[] words = FullReviewText.Split(" ");
+
+            if (words.Length <= 10) return string.Join(" ", words!);
+            else return string.Join(" ", words.Take(10)!) + "...";
+        }
+    }
+    private Popup popupRef;
+
+    private void RedirectPage()
+    {
+        // Shows the popup at the center of the screen
+        popupRef.Show(FullReviewText, HeaderUserName);
+    }
+}
+
+@* explosion: https://speckyboy.com/explosions-in-web-design/ *@
+<style>
+    .review-wrap{
+        display:flex;
+        margin-bottom: 20px;
+        align-content:center;
+    }
+    .review {
+        height:250px;
+        min-width: 450px;
+        max-width: 800px;
+        border: 1px solid black;
+        border-radius: 10px;
+        display: flex;
+        font-size: large;
+    }
+
+    .shell-body:hover {
+        cursor: pointer;
+    }
+
+    .reviews :nth-child(odd of .review-wrap) .review{
+        background-color: rgba(206,170,160,1);
+        margin-left:20%;
+    }
+
+    .reviews :nth-child(odd of .review-wrap):not(:hover) .review{
+        box-shadow: 5px 5px 5px rgba(106,70,60,1);
+    }
+
+    .reviews :nth-child(even of .review-wrap) .review{
+        background-color: rgba(206,170,160,1);
+        margin-left: 5%%;
+    }
+
+    .reviews :nth-child(even of .review-wrap):not(:hover) .review{
+        box-shadow: 5px 5px 5px rgba(106,70,60,1);
+    }
+
+    /* from https://codepen.io/chilliconcode/pen/OWxqYR */
+    .shell-metal {
+        display:flex;
+        aspect-ratio: 1 / 1;
+        height: inherit;
+        border-radius: 10px 0 0 10px;
+    }
+    .shell-outer-edge {
+        position: relative;
+        width: 10%;
+        height: 110%;
+        background: inherit;
+        left: -10%;
+        top: -5%;
+        border: 1px solid black;
+    }
+    .shell-image-container {
+        height: inherit;
+        overflow: hidden;
+        aspect-ratio: 1/1;
+        position: absolute;
+        border-radius: 3%;
+    }
+    .shell-image {
+        position:absolute;
+        height: inherit;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .shell-body {
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+
+    .review-rating span {
+        color: gold;
+    }
+
+ 
+
+    
+</style>

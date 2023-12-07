@@ -48,8 +48,8 @@ namespace ShellAndNecklaceAPI.Services;
                         Name = i.Itemname,
                         Description = i.Description,
                         PriceBase = (decimal)i.Pricebase,
-                        PicString = picstring,
-                        Status = statusstring
+                        //PicString = picstring,
+                        //  Status = statusstring
                     });
                 }
                 logger.LogInformation("Item list compiled as data transfer object.\nReturning...");
