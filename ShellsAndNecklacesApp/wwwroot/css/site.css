@@ -219,3 +219,33 @@ main {
 .floatleft{
     float:right;
 }
+
+div.loading-message-container {
+    background: rgb(251,250,248);
+    background: linear-gradient(125deg, rgba(251,250,248,1) 0%, rgba(126,80,70,0.85) 42%, rgba(0,0,0,0.75) 100%);
+    font-size: 2em;
+    padding: 2em 5em 2em 2em;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    overflow: hidden;
+    border-top: 16px solid #DEB887;
+    border-bottom: 16px solid #DEB887;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
