@@ -49,8 +49,8 @@ namespace ShellAndNecklaceAPI.Services
                         Name = i.Itemname,
                         Description = i.Description,
                         PriceBase = (decimal)i.Pricebase,
-                        PicId = i.Pictureid ?? 33,
-                        StatusId = i.Statusid ?? 9
+                        PicString = picstring,
+                        StatusType = statusstring
                     });
                 }
                 logger.LogInformation("Item list compiled as data transfer object.\nReturning...");
