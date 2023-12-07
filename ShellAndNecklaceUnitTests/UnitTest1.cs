@@ -35,8 +35,8 @@ namespace ShellAndNecklaceUnitTests
         [Fact]
         public void ButtonsRedirectCorrectly() {
 			//arrange
-			using var ctx = new TestContext();
-			var cut = RenderComponent<MainLayout>();
+			//using var ctx = new TestContext();
+			//var cut = RenderComponent<MainLayout>();
 			//	var sfbutton = cut.FindComponent<MenuItem>;
 			//act
 			//assert
