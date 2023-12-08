@@ -16,81 +16,90 @@
 <PageTitle>Shop</PageTitle>
 <link rel="stylesheet" href="Shop.css" />
 
-<h3>Shop</h3>
-
-<ul class="pagination mt-3">
-    <li class="page-item @(currentPage == 1? "disabled" : "")">
-        <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
-    </li>
-    @for (int i = 1; i <= totalPages; i++)
+<Div Class="bodyContents">
+    @if(queriedItems is null || itemEnum is null)
     {
-        <li class="page-item @(currentPage == i? "active" : "")">
-            <a class="page-link" href="/store/@i">@i</a>
-        </li>
-    }
-    <li class="page-item @(currentPage == totalPages? "disabled" : "")">
-        <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
-    </li>
-</ul>
-
-<select @bind="sortBy">
-    <option value="name">Name</option>
-    <option value="price">Price</option>
-</select>
-
-<select @bind="sortOrder">
-    <option value="asc">Ascending</option>
-    <option value="desc">Descending</option>
-</select>
-
-<button @onclick="HandleSortChangeAsync">Apply Sort</button>
-<Div Class="shop-items">
-
-@*Need style for each status, pagination, automatic making cards*@
-    @if (queriedItems != null && queriedItems.Any())
-    {
-        @foreach (var item in queriedItems)
-        {
-            @*<div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <p class="card-text">Description</p>
-                    <a href="/store/item/@item.Name" class="btn btn-primary">Check out @item.Name</a>
-                </div>
-            </div>*@
-
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <p class="card-text">$@item.PriceBase</p>
-                    <p class="card-text">@item.Description</p>
-                    <a href="/store/item/@item.Name" class="btn btn-primary">Check out @item.Name</a>
-                </div>
-            </div>
-        }
+        <LoadingPage></LoadingPage>
     }
     else
     {
-        <p>No items found. Please check back later.</p>
+        
+        <h3>Shop</h3>
+        <ul class="pagination mt-3">
+            <li class="page-item @(currentPage == 1? "disabled" : "")">
+                <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(currentPage == i? "active" : "")">
+                    <a class="page-link" href="/store/@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages? "disabled" : "")">
+                <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
+            </li>
+        </ul>
+
+        <select @bind="sortBy">
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+        </select>
+
+        <select @bind="sortOrder">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+        </select>
+
+        <button @onclick="HandleSortChangeAsync">Apply Sort</button>
+        <Div Class="shop-items">
+
+        @*Need style for each status, pagination, automatic making cards*@
+            @if (queriedItems != null && queriedItems.Any())
+            {
+                @foreach (var item in queriedItems)
+                {
+                    @*<div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">Description</p>
+                            <a href="/store/item/@item.Name" class="btn btn-primary">Check out @item.Name</a>
+                        </div>
+                    </div>*@
+
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="@item.PicString" alt="picture of @item.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <p class="card-text">$@item.PriceBase</p>
+                            <p class="card-text">@item.Description</p>
+                            <a href="/store/item/@item.Name" class="btn btn-primary">Check out @item.Name</a>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No items found. Please check back later.</p>
+            }
+
+
+        </Div>
+        <ul class="pagination mt-3">
+            <li class="page-item @(currentPage == 1? "disabled" : "")">
+                <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++) {
+                <li class="page-item @(currentPage == i? "active" : "")">
+                    <a class="page-link" href="/store/@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages? "disabled" : "")">
+                <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
+            </li>
+        </ul>
     }
-
-
 </Div>
-<ul class="pagination mt-3">
-    <li class="page-item @(currentPage == 1? "disabled" : "")">
-        <a class="page-link" href="/store/@(currentPage - 1)">Previous</a>
-    </li>
-    @for (int i = 1; i <= totalPages; i++) {
-        <li class="page-item @(currentPage == i? "active" : "")">
-            <a class="page-link" href="/store/@i">@i</a>
-        </li>
-    }
-    <li class="page-item @(currentPage == totalPages? "disabled" : "")">
-        <a class="page-link" href="/store/@(currentPage + 1)">Next</a>
-    </li>
-</ul>
 
 @code {
     [Parameter]

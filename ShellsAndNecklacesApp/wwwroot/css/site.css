@@ -222,7 +222,7 @@ main {
 .centered-banner {
     align-content: center;
     justify-content: center;
-
+}
 .floated-image{
     float:left;
     width:400px;
@@ -241,9 +241,11 @@ main {
 
 div.loading-message-container {
     background: rgb(251,250,248);
-    background: linear-gradient(125deg, rgba(251,250,248,1) 0%, rgba(126,80,70,0.85) 42%, rgba(0,0,0,0.75) 100%);
+    background: linear-gradient(125deg, rgba(251,250,248,1) 0%, rgba(126,80,70,0.85) 65%, rgba(0,0,0,0.75) 100%);
     font-size: 2em;
     padding: 2em 5em 2em 2em;
+    display: flex;
+    justify-content: space-between;
 }
 
 .loader {
@@ -267,4 +269,89 @@ div.loading-message-container {
     100% {
         transform: rotate(360deg);
     }
+}
+
+/*Review*/
+
+.review-wrap {
+    display: flex;
+    margin-bottom: 20px;
+    align-content: center;
+}
+
+.review {
+    height: 250px;
+    min-width: 450px;
+    max-width: 800px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    font-size: large;
+}
+
+.shell-body:hover {
+    cursor: pointer;
+}
+
+.reviews :nth-child(odd of .review-wrap) .review {
+    background-color: rgba(206,170,160,1);
+    margin-left: 20%;
+}
+
+.reviews :nth-child(odd of .review-wrap):not(:hover) .review {
+    box-shadow: 5px 5px 5px rgba(106,70,60,1);
+}
+
+.reviews :nth-child(even of .review-wrap) .review {
+    background-color: rgba(206,170,160,1);
+    margin-left: 5%;
+}
+
+.reviews :nth-child(even of .review-wrap):not(:hover) .review {
+    box-shadow: 5px 5px 5px rgba(106,70,60,1);
+}
+
+/* from https://codepen.io/chilliconcode/pen/OWxqYR */
+.shell-metal {
+    display: flex;
+    aspect-ratio: 1 / 1;
+    height: inherit;
+    border-radius: 10px 0 0 10px;
+}
+
+.shell-outer-edge {
+    position: relative;
+    width: 10%;
+    height: 110%;
+    background: inherit;
+    left: -10%;
+    top: -5%;
+    border: 1px solid black;
+}
+
+.shell-image-container {
+    height: inherit;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    position: absolute;
+    border-radius: 3%;
+}
+
+.shell-image {
+    position: absolute;
+    height: inherit;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shell-body {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-rating span {
+    color: gold;
 }
