@@ -240,8 +240,9 @@ main {
 }
 
 div.loading-message-container {
-    background: rgb(251,250,248);
-    background: linear-gradient(125deg, rgba(251,250,248,1) 0%, rgba(126,80,70,0.85) 65%, rgba(0,0,0,0.75) 100%);
+    margin-top: 20px;
+    background-color: rgba(206,170,160,1);
+    border-radius:5px;
     font-size: 2em;
     padding: 2em 5em 2em 2em;
     display: flex;
