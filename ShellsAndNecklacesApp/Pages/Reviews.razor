@@ -1,4 +1,7 @@
 ﻿@page "/review"
+@using Microsoft.EntityFrameworkCore
+@inject ShellAndNecklaceAPI.Services.ReviewService reviewService
+@inject IDbContextFactory<ShellAndNecklaceAPI.Data.OneShotShopContext> contextFactory
 
 
 <Div Class="bodyContents">
