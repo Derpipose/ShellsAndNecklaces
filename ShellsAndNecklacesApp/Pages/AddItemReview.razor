@@ -1,0 +1,71 @@
+﻿@page "/reviews/add"
+@using Microsoft.EntityFrameworkCore
+@inject ShellAndNecklaceAPI.Services.ReviewService reviewService
+@inject IDbContextFactory<ShellAndNecklaceAPI.Data.OneShotShopContext> contextFactory
+
+<PageTitle>Add Review</PageTitle>
+
+<h1>Add Review</h1>
+
+@if(Review is not null)
+{
+    <EditForm Model="@Review" class="review-form">
+        <DataAnnotationsValidator/>
+        <Microsoft.AspNetCore.Components.Forms.ValidationSummary/>
+        
+        <div class="mb-3">
+            <label for="shop-item" class="form-label">Item</label>
+            <InputSelect id="shop-item" class="form-select"
+                @bind-Value="Review.Itemid">
+                @if(Items is not null)
+                {
+                    @foreach (var item in Items)
+                    {
+                        <option value="@item.Id">@item.Itemname</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+        
+        <div class="mb-3">
+            <label for="review-rating" class="form-label">Rating</label>
+            <InputNumber TValue="int" min="0" max="10" id="review-rating" class="form-range"
+                         @bind-Value="Review.Rating"/>
+            <ValidationMessage For="() => Review.Rating"/>
+        </div>
+        
+        <div class="mb-3">
+            <label for="review-text" class="form-label">Text</label>
+            <InputText id="review-text" class="form-control"
+                        @bind-Value="Review.Reviewtext"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Review</button>
+    </EditForm>
+}
+
+@code {
+    public ShellAndNecklaceAPI.Data.ItemReview? Review { get; set; }
+
+    public ShellAndNecklaceAPI.Data.Item[]? Items { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = contextFactory.CreateDbContext();
+
+        Items = await context.Items
+                .OrderBy(i => i.Itemname)
+                .ToArrayAsync();
+        Review = new()
+            {
+                Itemid = Items.FirstOrDefault()?.Id
+            };
+    }
+}
+
+<style>
+.review-form {
+   min-width: 700px;
+   background-color: navajowhite;
+}
+</style>
