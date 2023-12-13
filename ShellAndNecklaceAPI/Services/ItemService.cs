@@ -14,7 +14,7 @@ namespace ShellAndNecklaceAPI.Services;
             _context = (OneShotShopContext)newcontext;
         }
 
-        public async Task<IEnumerable<ItemDTO>> GetAll()
+        public async Task<List<ItemDTO>> GetAll()
         {
             try
             {
@@ -66,10 +66,10 @@ namespace ShellAndNecklaceAPI.Services;
             try
             {
                 logger.LogInformation("Item name provided, attempting access.");
-            var itemdeets = await _context.Items.FirstOrDefaultAsync(i => i.Itemname == name);
-            var piccontents = await _context.Pictures.FirstOrDefaultAsync(p => p.Id == itemdeets.Pictureid);
-            var filedeets = await _context.Filetypes.FirstOrDefaultAsync(ft => ft.Id == piccontents.Filetypeid);
-                var statusdeets = await _context.Statuses.FirstOrDefaultAsync(s => s.Id == itemdeets.Statusid);
+            var itemdeets = await _context.Items.Where(i => i.Itemname == name).FirstOrDefaultAsync();
+            var piccontents = await _context.Pictures.Where(p => p.Id == itemdeets.Pictureid).FirstOrDefaultAsync();
+            var filedeets = await _context.Filetypes.Where(ft => ft.Id == piccontents.Filetypeid).FirstOrDefaultAsync();
+                var statusdeets = await _context.Statuses.Where(s => s.Id == itemdeets.Statusid).FirstOrDefaultAsync();
 
                 ItemDTO itemEnt = new ItemDTO() {
                     Name = itemdeets.Itemname,
