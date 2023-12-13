@@ -67,7 +67,7 @@
     }
 </Div>
 
-@code {
+    @code {
     [Parameter]
     public int page { get; set; } = 0;
 
@@ -97,19 +97,20 @@
             }
             else
             {
-                Email = "zanerclegg@gmail.com";
+                Email = "username@gmail.com";
             }
+            var context = ContextFactory.CreateDbContext();
+            PurchaseHistoryService purchasedItems = new PurchaseHistoryService(itemLogger, context);
+            AccountService account = new AccountService(accountLogger, context);
+            AccountDTO acc = await account.Get(Email);
+            orderEnum = await purchasedItems.GetPurchaseHistory(acc);
+            await FetchItemsAsync();
         }
         catch (Exception ex)
         {
 
         }
-        var context = ContextFactory.CreateDbContext();
-        PurchaseHistoryService purchasedItems = new PurchaseHistoryService(itemLogger, context);
-        AccountService account = new AccountService(accountLogger, context);
-        AccountDTO acc = await account.Get(Email);
-        orderEnum = await purchasedItems.GetPurchaseHistory(acc);
-        await FetchItemsAsync();
+        
     }
 
     private async Task FetchItemsAsync()
