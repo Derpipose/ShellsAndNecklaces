@@ -119,7 +119,15 @@ namespace ShellAndNecklaceAPI.Services
                 if(itemid == null)
                     throw new KeyNotFoundException($"Item {cart.itemname} not found!");
 
-                if (accid == null) throw new KeyNotFoundException($"Account {cart.email} not found!");
+                if (accid == null)
+                {
+                    _context.Accounts.Add(new Account()
+                    {
+                        Email = cart.email
+                    });
+
+                    await _context.SaveChangesAsync();
+                }
 
                 _context.Carts.Add(new Cart()
                 {
