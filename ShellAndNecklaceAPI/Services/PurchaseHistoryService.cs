@@ -22,10 +22,10 @@ public class PurchaseHistoryService
             logger.LogInformation($"Attempting to get purchase history for {acc.Username}");
 
             List<Purchaseorder> PurchaseHistory = (List<Purchaseorder>)(from p in _Context.Purchaseorders
-                                                                           join o in _Context.Orderitems on p.Id equals o.Orderid
-                                                                           join a in _Context.Accounts on p.Accountid equals a.Id
-                                                                           where a.Username == acc.Username
-                                                                           select p);
+                                                                        join o in _Context.Orderitems on p.Id equals o.Orderid
+                                                                        join a in _Context.Accounts on p.Accountid equals a.Id
+                                                                        where a.Username == acc.Username
+                                                                        select p).ToList();
 
             var itemsordered = from o in _Context.Orderitems
                                join p in _Context.Purchaseorders on o.Orderid equals p.Id

@@ -51,7 +51,12 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">@order.OrderDate</h5>
-                            <p class="card-text">@order.Items</p>
+                            <p class="card-text">
+                                @foreach (var i in order.Items)
+                                {
+                                    <p>@i.Name</p>
+                                }
+                            </p>
                             <p class="card-text">@order.Notes</p>
                         </div>
                     </div>
@@ -94,6 +99,7 @@
             if (givenEmail != null)
             {
                 Email = givenEmail.Value;
+                Email = "username@gmail.com";
             }
             else
             {
