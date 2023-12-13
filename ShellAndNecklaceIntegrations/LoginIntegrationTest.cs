@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit;
 
 namespace ShellAndNecklaceIntegrations
 {
-    public class LoginIntegrationTest
+    public class LoginIntegrationTest : BlazorIntegrationTestContext
     {
         [Fact]
         public async Task Login()
         {
-            
+            var cut = RenderComponent<LoginControl>();
+
+
         }
     }
 }

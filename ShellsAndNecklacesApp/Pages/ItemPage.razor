@@ -3,15 +3,19 @@
 @inject IDbContextFactory<OneShotShopContext> ContextFactory
 @inject NavigationManager NavManager
 @inject ILogger<ItemService> itemLogger
+@inject ILogger<CartService> cartLogger
 @using Microsoft.EntityFrameworkCore;
 @using ShellAndNecklaceAPI
 @using ShellAndNecklaceAPI.Data
 @using ShellAndNecklaceAPI.Data.DTOs;
 @using ShellAndNecklaceAPI.Services;
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor _httpContextAccessor;
+@inject HttpClient Http;
 
 
-
-    @if (initialized) {
+@if (initialized) {
         <PageTitle>@itemname</PageTitle>
     <Div Class="bodyContents backgroundColoring">
         
@@ -39,29 +43,71 @@
                 <button type="submit" class="btn btn-primary">Add To Cart</button>
             </EditForm>
         </Div>
+
+    @if (addedtocart)
+    {
+        <p>Item added to cart!</p>
+    }
     }
 
 
 @code {
     [Parameter]
     public string itemname { get; set; } = "Single Winchester Gold";
-
-    private bool initialized = false;
+    private ClaimsPrincipal UserForEmail;
+    private string Email;
+    private bool initialized = false, addedtocart = false;
 
     private ItemService DBservice;
+    private CartService cartService;
     ItemDTO pageitem; 
     private PurchasedItemDTO order = new PurchasedItemDTO(); // Initialize the order object
 
 
+    private async Task HandleValidSubmit()
+    {
+        var cartitem = new CartDTO()
+            {
+                itemname = order.Name,
+                quantity = order.Quantity,
+                actualprice = order.Price,
+                email = Email
+            };
 
-    private async Task HandleValidSubmit() { }
+        await cartService.AddToCart(cartitem);
+    }
+
     private async Task HandleInvalidSubmit() { }
 
 
     protected override async Task OnInitializedAsync() {
+        await base.OnInitializedAsync();
+
+        try
+        {
+            UserForEmail = _httpContextAccessor.HttpContext.User;
+
+            var givenEmail =
+                _httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.Email);
+            if (givenEmail != null)
+            {
+                Email = givenEmail.Value;
+            }
+            else
+            {
+                Email = "zanerclegg@gmail.com";
+            }
+        }
+        catch
+        {
+            
+        }
+
         var context = ContextFactory.CreateDbContext();
-        ItemService itemService = new ItemService(itemLogger, context);
-        pageitem = await itemService.Get(itemname);
+        DBservice = new ItemService(itemLogger, context);
+        cartService = new CartService(cartLogger, context);
+        pageitem = await DBservice.Get(itemname);
         initialized = true;
     }
 
