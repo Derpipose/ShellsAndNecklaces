@@ -29,13 +29,16 @@
 
 
 @code {
-    public double Rating = 5;
+    //From 0 to 10, where 9 is 4 full stars and 1 half-star
+    [Parameter]
+    public int Rating { get; set; } = 5;
     //1-5
     public int FullStars
     {
         get
         {
-            return (int) Math.Floor(Rating);
+            // return (int) Math.Floor(Rating);
+            return Rating / 2;
         }
     }
     // 0 or 1
@@ -43,8 +46,9 @@
     {
         get
         {
-            if (Rating - (int) Rating != 0) return 1;
-            else return 0;
+            // if (Rating - (int) Rating != 0) return 1;
+            // else return 0;
+            return Rating % 2;
         }
     }
 
@@ -57,7 +61,8 @@
         }
     }
 
-    private string FullReviewText = @"The earings I ordered were perfect and wonderful. Now I can show off the things that my husband and I enjoy, hunting. The wood burned signs were also a very nice feature that we loved as well!";
+    [Parameter]
+    public string FullReviewText { get; set; } = @"The earings I ordered were perfect and wonderful. Now I can show off the things that my husband and I enjoy, hunting. The wood burned signs were also a very nice feature that we loved as well!";
 
     public string ShortenedReviewText
     {
