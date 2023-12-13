@@ -5,16 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bunit;
-using Testcontainers.PostgreSql;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Services;
+using Testcontainers.PostgreSql;
+using Bunit;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace ShellAndNecklaceIntegrations
 {
-    public class BlazorIntegrationTestContext : TestContext, IAsyncLifetime
+    public class BlazorIntegrationTestContext : Bunit.TestContext, IAsyncLifetime
     {
         private readonly PostgreSqlContainer _dbContainer;
 
