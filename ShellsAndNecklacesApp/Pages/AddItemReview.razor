@@ -9,19 +9,25 @@
 
 @if(Review is not null)
 {
-    <EditForm Model="@Review" class="review-form">
+    <EditForm Model="@Review" class="review-form" OnValidSubmit="HandleValidSubmit">
         <DataAnnotationsValidator/>
         <Microsoft.AspNetCore.Components.Forms.ValidationSummary/>
-        
+
+        <div class="mb-3">
+            <label for="review-username" class="form-label">Text</label>
+            <InputText id="review-username" class="form-control"
+                       @bind-Value="Review.Username" />
+        </div>
+
         <div class="mb-3">
             <label for="shop-item" class="form-label">Item</label>
             <InputSelect id="shop-item" class="form-select"
-                @bind-Value="Review.Itemid">
+                @bind-Value="Review.ItemName">
                 @if(Items is not null)
                 {
                     @foreach (var item in Items)
                     {
-                        <option value="@item.Id">@item.Itemname</option>
+                        <option value="@item.Itemname">@item.Itemname</option>
                     }
                 }
             </InputSelect>
@@ -37,7 +43,7 @@
         <div class="mb-3">
             <label for="review-text" class="form-label">Text</label>
             <InputText id="review-text" class="form-control"
-                        @bind-Value="Review.Reviewtext"/>
+                        @bind-Value="Review.ItemReviewText"/>
         </div>
 
         <button type="submit" class="btn btn-primary">Add Review</button>
@@ -45,7 +51,7 @@
 }
 
 @code {
-    public ShellAndNecklaceAPI.Data.ItemReview? Review { get; set; }
+    public ShellAndNecklaceAPI.Data.DTOs.ItemReviewDTO? Review { get; set; }
 
     public ShellAndNecklaceAPI.Data.Item[]? Items { get; set; }
 
@@ -58,8 +64,19 @@
                 .ToArrayAsync();
         Review = new()
             {
-                Itemid = Items.FirstOrDefault()?.Id
+                ItemName = Items.FirstOrDefault()?.Itemname
             };
+    }
+    public async Task HandleValidSubmit()
+    {
+        var newReview = new ShellAndNecklaceAPI.Data.DTOs.ItemReviewDTO()
+            {
+                Username = Review.Username,
+                ItemReviewText = Review.ItemReviewText,
+                Rating = Review.Rating,
+                ItemName = Review.ItemName
+            };
+        await reviewService.CreateItemReview(newReview);
     }
 }
 

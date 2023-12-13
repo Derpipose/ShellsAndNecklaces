@@ -7,18 +7,20 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <UserSecretsId>3eb46903-dfe3-4f0a-9c05-7011c62991b5</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="bunit" Version="1.25.3" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="FluentAssertions.BUnit" Version="0.0.67" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="Moq.EntityFrameworkCore" Version="7.0.0.2" />
     <PackageReference Include="NUnit" Version="4.0.1" />
     <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
     <PackageReference Include="Testcontainers.PostgreSql" Version="3.6.0" />
     <PackageReference Include="xunit" Version="2.6.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.5">
