@@ -13,6 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Shared\ServiceReview.razor.old" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Shared\ServiceReview.razor.old" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Carousel.css" />
   </ItemGroup>
 
