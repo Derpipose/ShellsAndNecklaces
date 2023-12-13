@@ -1,4 +1,4 @@
-﻿@page "/store/item/{itemname}"
+﻿@page "/store/item/{iname}"
 
 @inject IDbContextFactory<OneShotShopContext> ContextFactory
 @inject NavigationManager NavManager
@@ -16,10 +16,10 @@
 
 
 @if (initialized) {
-        <PageTitle>@itemname</PageTitle>
+        <PageTitle>@iname</PageTitle>
     <Div Class="bodyContents backgroundColoring">
         
-            <h3>@itemname</h3>
+            <h3>@iname</h3>
             <img class="floated-image AboutImage owner-icon " src="@pageitem.PicString" alt="@pageitem.Name" />
             <EditForm Model = "@order" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
                 <DataAnnotationsValidator/>
@@ -42,20 +42,21 @@
 
                 <button type="submit" class="btn btn-primary">Add To Cart</button>
             </EditForm>
+            <br/>
+        <Div class="cart-message">
+            @if (addedtocart)
+            {
+                <p>Item added to cart!</p>
+            }
+        </Div>
         </Div>
     
-    <Div class="cart-message">
-        @if (addedtocart)
-        {
-            <p>Item added to cart!</p>
-        }
-    </Div>
     }
 
 
 @code {
     [Parameter]
-    public string itemname { get; set; } = "Single Winchester Gold";
+    public string iname { get; set; } = "Single Winchester Gold";
     private ClaimsPrincipal UserForEmail;
     private string Email;
     private bool initialized = false, addedtocart = false;
@@ -70,9 +71,9 @@
     {
         var cartitem = new CartDTO()
             {
-                itemname = order.Name,
+                itemname = iname,
                 quantity = order.Quantity,
-                actualprice = order.Price,
+                actualprice = pageitem.PriceBase,
                 email = Email
             };
 
@@ -110,7 +111,7 @@
         var context = ContextFactory.CreateDbContext();
         DBservice = new ItemService(itemLogger, context);
         cartService = new CartService(cartLogger, context);
-        pageitem = await DBservice.Get(itemname);
+        pageitem = await DBservice.Get(iname);
         initialized = true;
     }
 

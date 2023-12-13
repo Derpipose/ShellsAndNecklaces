@@ -114,25 +114,46 @@ namespace ShellAndNecklaceAPI.Services
             {
                 logger.LogInformation($"Attempting to add item {cart.itemname} to cart...");
                 var itemid = (await _context.Items.FirstOrDefaultAsync(i => i.Itemname == cart.itemname)).Id;
-                var accid = (await _context.Accounts.FirstOrDefaultAsync(a => a.Email == cart.email)).Id;
+
+                Account accid = null;
+                try
+                {
+                    accid = (await _context.Accounts.FirstOrDefaultAsync(a => a.Email == cart.email));
+                    
+                    if (accid == null)
+                    {
+                        accid = new Account()
+                        {
+                            Email = cart.email
+                        };
+                        _context.Accounts.Add(accid);
+
+                        await _context.SaveChangesAsync();
+                        accid = await _context.Accounts.FirstOrDefaultAsync(x => x.Email == cart.email);
+                    }
+                }
+                catch
+                {
+                    if (accid == null)
+                    {
+                        accid = new Account()
+                        {
+                            Email = cart.email
+                        };
+                        _context.Accounts.Add(accid);
+
+                        await _context.SaveChangesAsync();
+                        accid = await _context.Accounts.FirstOrDefaultAsync(x => x.Email == cart.email);
+                    }
+                }
 
                 if(itemid == null)
                     throw new KeyNotFoundException($"Item {cart.itemname} not found!");
 
-                if (accid == null)
-                {
-                    _context.Accounts.Add(new Account()
-                    {
-                        Email = cart.email
-                    });
-
-                    await _context.SaveChangesAsync();
-                }
-
                 _context.Carts.Add(new Cart()
                 {
                     Itemid = itemid,
-                    Accountid = accid,
+                    Accountid = accid.Id,
                     Actualprice = cart.actualprice,
                     Quantity = cart.quantity,
                 });
