@@ -14,7 +14,7 @@ namespace ShellAndNecklaceIntegrations
         {
             var cut = RenderComponent<LoginControl>();
 
-
+            throw new NotImplementedException();
         }
     }
 }

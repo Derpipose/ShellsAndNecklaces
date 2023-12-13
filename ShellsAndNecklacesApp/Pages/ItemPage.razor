@@ -43,11 +43,13 @@
                 <button type="submit" class="btn btn-primary">Add To Cart</button>
             </EditForm>
         </Div>
-
-    @if (addedtocart)
-    {
-        <p>Item added to cart!</p>
-    }
+    
+    <Div class="cart-message">
+        @if (addedtocart)
+        {
+            <p>Item added to cart!</p>
+        }
+    </Div>
     }
 
 
@@ -75,6 +77,7 @@
             };
 
         await cartService.AddToCart(cartitem);
+        addedtocart = true;
     }
 
     private async Task HandleInvalidSubmit() { }
