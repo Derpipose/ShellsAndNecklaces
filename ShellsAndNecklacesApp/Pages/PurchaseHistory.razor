@@ -1,9 +1,175 @@
 ﻿@page "/account/history"
+@page "/account/history/{page:int}"
+
+@inject IDbContextFactory<OneShotShopContext> ContextFactory
+@inject NavigationManager NavManager
+@inject ILogger<PurchaseHistoryService> itemLogger
+@inject ILogger<AccountService> accountLogger
+@inject IHttpContextAccessor _httpContextAccessor;
+@using Microsoft.EntityFrameworkCore;
+@using ShellAndNecklaceAPI
+@using ShellAndNecklaceAPI.Data
+@using ShellAndNecklaceAPI.Data.DTOs;
+@using ShellAndNecklaceAPI.Services;
+@using System.Security.Claims;
 
 <PageTitle>Purchase History</PageTitle>
 
-<h3>PurchaseHistory</h3>
+
+<link rel="stylesheet" href="Shop.css" />
+ 
+<Div Class="bodyContents">
+    @if(queriedItems is null || orderEnum is null)
+    {
+        <LoadingPage></LoadingPage>
+    }
+    else
+    {
+        
+        <h3>Purchase History</h3>
+        <h4>Orders for @Email</h4>
+        <ul class="pagination mt-3">
+            <li class="page-item @(page == 1? "disabled" : "")">
+                <a class="page-link" href="/store/@(page - 1)">Previous</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(page == i? "active" : "")">
+                    <a class="page-link" href="/store/@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(page == totalPages? "disabled" : "")">
+                <a class="page-link" href="/store/@(page + 1)">Next</a>
+            </li>
+        </ul>
+        <Div Class="shop-items">
+
+            @if (queriedItems != null && queriedItems.Any())
+            {
+                @foreach (var order in queriedItems)
+                {
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@order.OrderDate</h5>
+                            <p class="card-text">@order.Items</p>
+                            <p class="card-text">@order.Notes</p>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No items found. Please check back later.</p>
+            }
+
+
+        </Div>
+    }
+</Div>
 
 @code {
+    [Parameter]
+    public int page { get; set; } = 0;
 
+    private IEnumerable<OrderDTO> queriedItems { get; set; }
+    private IEnumerable<OrderDTO> orderEnum { get; set; }
+    private int totalPages { get; set; }
+    private string sortBy = "name"; // Default sorting by name
+    private string sortOrder = "asc"; // Default sorting order
+    private int itemsPerPage { get; set; } = 10;
+    private ClaimsPrincipal UserForEmail;
+    private string Email;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        try
+        {
+            UserForEmail = _httpContextAccessor.HttpContext.User;
+
+            var givenEmail =
+                _httpContextAccessor.HttpContext.User
+                .FindFirst(ClaimTypes.Email);
+            if (givenEmail != null)
+            {
+                Email = givenEmail.Value;
+            }
+            else
+            {
+                Email = "zanerclegg@gmail.com";
+            }
+        }
+        catch (Exception ex)
+        {
+
+        }
+        var context = ContextFactory.CreateDbContext();
+        PurchaseHistoryService purchasedItems = new PurchaseHistoryService(itemLogger, context);
+        AccountService account = new AccountService(accountLogger, context);
+        AccountDTO acc = await account.Get(Email);
+        orderEnum = await purchasedItems.GetPurchaseHistory(acc);
+        await FetchItemsAsync();
+    }
+
+    private async Task FetchItemsAsync()
+    {
+
+        try
+        {
+            var itemContext = ContextFactory.CreateDbContext();
+            if (itemContext.Orderitems.Any())
+            {
+                //IQueryable<Item> query = itemContext.Items.OrderBy(item => item.Itemname);
+
+                queriedItems = orderEnum
+                                        .OrderBy(order => order.OrderDate)
+                                        .Skip((page - 1) * itemsPerPage)
+                                        .Take(itemsPerPage);
+            }
+            else
+            {
+                totalPages = 1;
+            }
+            if (page <= 0)
+            {
+                NavManager.NavigateTo("/account/history/1");
+                return;
+            }
+            else { }
+            var itemCount = orderEnum.Count();
+            if (itemCount < 1 || itemCount == null)
+            {
+                totalPages = 1;
+            }
+            else
+            {
+                totalPages = (int)Math.Ceiling((decimal)itemCount / itemsPerPage);
+            }
+
+            if (page > totalPages)
+            {
+                page = totalPages;
+                NavManager.NavigateTo($"/account/history/{totalPages}");
+                return;
+            }
+            else { }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error:{e.Message}");
+        }
+    }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await FetchItemsAsync();
+    }
+
+    private async Task HandleSortChangeAsync()
+    {
+        await FetchItemsAsync(); // Re-fetch items based on the updated sorting criteria
+        StateHasChanged(); // Refresh UI
+    }
 }

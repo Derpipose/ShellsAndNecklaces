@@ -4,18 +4,18 @@ using ShellAndNecklaceAPI.Data;
 using ShellAndNecklaceAPI.Data.DTOs;
 
 namespace ShellAndNecklaceAPI.Services;
-    public class PurchaseHistorySerice
+    public class PurchaseHistoryService
     {
-        private readonly ILogger<PurchaseHistorySerice> logger;
+        private readonly ILogger<PurchaseHistoryService> logger;
         private OneShotShopContext _Context;
 
-        public PurchaseHistorySerice(ILogger<PurchaseHistorySerice> logger, OneShotShopContext context)
+        public PurchaseHistoryService(ILogger<PurchaseHistoryService> logger, OneShotShopContext context)
         {
             this.logger = logger;
             _Context = context;
         }
 
-        public async Task<List<OrderDTO>> GetPurchaseHistory(Account acc)
+        public async Task<List<OrderDTO>> GetPurchaseHistory(AccountDTO acc)
         {
             try
             {
@@ -32,7 +32,8 @@ namespace ShellAndNecklaceAPI.Services;
                                    join i in _Context.Items on o.Itemid equals i.Id
                                    join pc in _Context.Pictures on i.Pictureid equals pc.Id
                                    join f in _Context.Filetypes on pc.Filetypeid equals f.Id
-                                   where p.Accountid == acc.Id
+                                   join a in _Context.Accounts on p.Accountid equals a.Id
+                                   where a.Email == acc.Username && p.Accountid == a.Id 
                                    select new
                                    {
                                        orderid = o.Orderid,
