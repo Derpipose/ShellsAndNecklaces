@@ -14,3 +14,8 @@ services:
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+# To run this script, have to be in the current directory and execute:
+# docker-compose up -d
+# kill the container and allow deleting the volumne directory, execite:
+#docker-compose down -v
